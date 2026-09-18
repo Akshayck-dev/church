@@ -16,14 +16,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenPrayerModal })
           <div className="space-y-4">
             <div className="flex items-center gap-2.5">
               <img
-                alt="Sancta Maria Marian Shrine Logo"
+                alt="Lourde Matha Church Logo"
                 className="h-10 w-auto object-contain brightness-0 invert"
                 src={SHRINE_LOGO}
               />
               <div className="flex flex-col">
-                <span className="font-title-lg text-lg text-white font-semibold">Sancta Maria</span>
-                <span className="font-label-sm text-[11px] uppercase tracking-widest text-[#c1e8ff]">
-                  Marian Shrine &amp; Parish
+                <span className="font-title-lg text-lg text-white font-semibold">Lourde Matha Church</span>
+                <span className="font-label-sm text-xs text-[#a4d4e2] uppercase tracking-widest mt-0.5">
+                  Thalayanadu
                 </span>
               </div>
             </div>
@@ -129,8 +129,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenPrayerModal })
 
         {/* Bottom Bar */}
         <div className="mt-8 pt-4 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
-          <p className="font-body-sm text-xs text-[#e8f6ff]/80">
-            © 2026 Sancta Maria Marian Shrine &amp; Parish. All sacred rights reserved.
+          <p className="text-[#a4d4e2] text-xs">
+            © 2026 Lourde Matha Church, Thalayanadu. All rights reserved.
           </p>
           <p className="font-headline-sm text-sm text-[#ffdf98] italic font-normal tracking-wide">
             Sub Tuum Praesidium Confugimus, Sancta Dei Genetrix

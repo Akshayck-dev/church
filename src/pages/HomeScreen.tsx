@@ -51,7 +51,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate, onOpenPrayer
               {/* Sacred Eyebrow Tag */}
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#dbf1ff] text-[#006780] font-label-md text-xs uppercase tracking-widest shadow-2xs">
                 <span className="text-[#745b1b] font-serif text-sm">†</span>
-                <span>Welcome to Sancta Maria Marian Shrine &amp; Parish</span>
+                <span>Welcome to Lourde Matha Church, Thalayanadu</span>
               </div>
 
               {/* Main Serif Headline */}

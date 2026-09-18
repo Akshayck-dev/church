@@ -42,17 +42,13 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => handleNavClick('home')}
             className="flex items-center gap-2.5 group text-left focus:outline-none"
           >
-            <img
-              alt="Sancta Maria Marian Shrine Logo"
-              className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
-              src={SHRINE_LOGO}
-            />
+
             <div className="flex flex-col">
               <span className="font-title-md text-base text-[#071e28] group-hover:text-[#006780] transition-colors leading-tight">
-                Sancta Maria
+                Lourde Matha Church
               </span>
               <span className="font-label-sm text-[11px] uppercase tracking-widest text-[#006780]">
-                Marian Shrine &amp; Parish
+                Thalayanadu
               </span>
             </div>
           </button>
