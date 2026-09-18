@@ -1,0 +1,6 @@
+{
+  "name": "Sancta Maria Marian Shrine & Parish",
+  "description": "A luminous sanctuary and parish web application featuring daily Holy Mass timings, devotions to Our Lady of Grace, live stream worship, sacraments, pastoral consultation, and parish community life.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
