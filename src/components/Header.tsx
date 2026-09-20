@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationTab } from '../types';
 import { SHRINE_LOGO } from '../data/parishData';
 
@@ -8,18 +8,15 @@ interface HeaderProps {
   onOpenPrayerModal: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({
-  currentTab,
-  onSelectTab,
-  onOpenPrayerModal,
-}) => {
+export const Header: React.FC<HeaderProps> = ({ currentTab, onSelectTab, onOpenPrayerModal }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [portalOpen, setPortalOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const navItems: { id: NavigationTab; label: string; isLive?: boolean }[] = [
     { id: 'home', label: 'Home' },
-    { id: 'mass-timings', label: 'Mass Timings' },
-    { id: 'devotions-shrine', label: 'Devotions & Shrine' },
+    { id: 'mass-timings', label: 'Qurbana Timings' },
+    { id: 'devotions-shrine', label: 'Devotions' },
     { id: 'sacraments', label: 'Sacraments' },
     { id: 'live-mass', label: 'Live Mass', isLive: true },
     { id: 'vicar-parish', label: 'Vicar & Parish' },
@@ -27,192 +24,238 @@ export const Header: React.FC<HeaderProps> = ({
     { id: 'offerings', label: 'Offerings' },
   ];
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false);
+        setPortalOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  // Close portal when clicking outside
+  useEffect(() => {
+    if (!portalOpen) return;
+    const onClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('[data-portal-root]')) setPortalOpen(false);
+    };
+    document.addEventListener('mousedown', onClick);
+    return () => document.removeEventListener('mousedown', onClick);
+  }, [portalOpen]);
+
   const handleNavClick = (tab: NavigationTab) => {
     onSelectTab(tab);
     setMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setPortalOpen(false);
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#ffffff]/90 backdrop-blur-md border-b border-[#67c7e8]/30 shadow-[0_4px_20px_-2px_rgba(40,127,163,0.06)]">
-      <div className="h-20 w-full px-4 sm:px-6 lg:px-12 flex items-center justify-between gap-4">
-        {/* Brand Logo & Title */}
-        <div className="flex items-center gap-4 shrink-0">
-          <button
-            onClick={() => handleNavClick('home')}
-            className="flex items-center gap-2.5 group text-left focus:outline-none"
-          >
-            <img
-              alt="Sancta Maria Marian Shrine Logo"
-              className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
-              src={SHRINE_LOGO}
-            />
-            <div className="flex flex-col">
-              <span className="font-title-md text-base text-[#071e28] group-hover:text-[#006780] transition-colors leading-tight">
-                Sancta Maria
-              </span>
-              <span className="font-label-sm text-[11px] uppercase tracking-widest text-[#006780]">
-                Marian Shrine &amp; Parish
-              </span>
-            </div>
-          </button>
-        </div>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden xl:flex items-center gap-1">
-          {navItems.map((item) => {
-            const isActive = currentTab === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => handleNavClick(item.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                  isActive
-                    ? 'bg-[#dbf1ff] text-[#006780] shadow-xs'
-                    : 'text-[#3e484d] hover:bg-[#d5ecfa] hover:text-[#071e28]'
-                }`}
-              >
-                {item.isLive && (
-                  <span className="w-2 h-2 rounded-full bg-[#ba1a1a] animate-pulse"></span>
-                )}
-                <span>{item.label}</span>
-              </button>
-            );
-          })}
-        </nav>
-
-        {/* Right Actions */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+    <header className="sticky top-0 z-50">
+      {/* Utility top bar */}
+      <div className="hidden bg-maroon-950 text-ivory-200 md:block">
+        <div className="container-site flex h-9 items-center justify-between text-[12px]">
+          <div className="flex items-center gap-5">
+            <span className="inline-flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-[15px] text-gold-300">location_on</span>
+              Kolapra – Thalayanadu Road, Thalayanadu, Thodupuzha
+            </span>
+            <a href="tel:+914862258257" className="inline-flex items-center gap-1.5 transition-colors hover:text-gold-200">
+              <span className="material-symbols-outlined text-[15px] text-gold-300">call</span>
+              +91 4862 258 257
+            </a>
+          </div>
           <button
             onClick={onOpenPrayerModal}
-            className="hidden sm:inline-flex items-center justify-center px-4 py-2 border border-[#d7b76e]/60 rounded-xl font-label-md text-xs text-[#745b1b] hover:bg-[#ffdf98]/30 transition-colors shadow-2xs"
+            className="inline-flex cursor-pointer items-center gap-1.5 font-medium transition-colors hover:text-gold-200"
           >
-            Submit Prayer Request
-          </button>
-
-          <button
-            onClick={() => handleNavClick('live-mass')}
-            className="inline-flex items-center justify-center px-4 py-2 bg-[#67c7e8] text-[#005266] hover:bg-[#006687] hover:text-white rounded-xl font-label-md text-xs shadow-[0_2px_8px_rgba(103,199,232,0.3)] transition-all font-semibold gap-1.5"
-          >
-            <span className="w-2 h-2 rounded-full bg-[#ba1a1a] animate-ping sm:hidden"></span>
-            <span>Watch Live</span>
-          </button>
-
-          {/* Parishioner Portal Icon with Menu */}
-          <div className="relative">
-            <button
-              onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-              className="w-9 h-9 rounded-full bg-[#006780] hover:bg-[#005266] text-white flex items-center justify-center transition-colors shadow-xs"
-              title="Parishioner Sanctuary Portal"
-            >
-              <span className="material-symbols-outlined text-[18px]">person</span>
-            </button>
-
-            {userDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-[#ffffff] shadow-xl border border-[#dbf1ff] p-3 z-50 text-xs text-[#071e28] animate-in fade-in zoom-in-95">
-                <div className="p-2 border-b border-[#dbf1ff] mb-2">
-                  <p className="font-semibold text-sm">Welcome, Pilgrim</p>
-                  <p className="text-[11px] text-[#3e484d]">Sanctuary Guest Session</p>
-                </div>
-                <div className="space-y-1">
-                  <button
-                    onClick={() => {
-                      onOpenPrayerModal();
-                      setUserDropdownOpen(false);
-                    }}
-                    className="w-full text-left px-2.5 py-1.5 rounded-lg hover:bg-[#f4faff] flex items-center gap-2"
-                  >
-                    <span className="material-symbols-outlined text-base text-[#006780]">local_fire_department</span>
-                    <span>My Votive Candles</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      handleNavClick('mass-timings');
-                      setUserDropdownOpen(false);
-                    }}
-                    className="w-full text-left px-2.5 py-1.5 rounded-lg hover:bg-[#f4faff] flex items-center gap-2"
-                  >
-                    <span className="material-symbols-outlined text-base text-[#006780]">church</span>
-                    <span>Mass Intentions Booking</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      handleNavClick('sacraments');
-                      setUserDropdownOpen(false);
-                    }}
-                    className="w-full text-left px-2.5 py-1.5 rounded-lg hover:bg-[#f4faff] flex items-center gap-2"
-                  >
-                    <span className="material-symbols-outlined text-base text-[#006780]">assignment</span>
-                    <span>Pastoral Consultation</span>
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Mobile Hamburger Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="xl:hidden w-9 h-9 rounded-xl bg-[#dbf1ff] text-[#071e28] flex items-center justify-center"
-            aria-label="Toggle Navigation"
-          >
-            <span className="material-symbols-outlined text-2xl">
-              {mobileMenuOpen ? 'close' : 'menu'}
-            </span>
+            <span className="material-symbols-outlined text-[15px] text-gold-300">edit_note</span>
+            Submit a Prayer Request
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
-      {mobileMenuOpen && (
-        <div className="xl:hidden bg-[#ffffff] border-b border-[#dbf1ff] px-6 py-5 shadow-xl animate-in slide-in-from-top-2">
-          <nav className="flex flex-col space-y-1">
+      {/* Main navigation bar */}
+      <div
+        className={`border-b border-line bg-ivory-50/95 backdrop-blur-md transition-shadow duration-300 ${
+          scrolled ? 'shadow-[0_6px_24px_-12px_rgba(51,12,19,0.25)]' : ''
+        }`}
+      >
+        <div className="container-site flex h-[72px] items-center justify-between gap-4">
+          {/* Brand */}
+          <button
+            onClick={() => handleNavClick('home')}
+            className="group flex shrink-0 cursor-pointer items-center gap-2.5 text-left sm:gap-3"
+            aria-label="Lourde Matha Church, Thalayanadu — home"
+          >
+            <img
+              alt="Lourde Matha Church Logo"
+              className="h-10 w-10 shrink-0 rounded-full object-cover ring-1 ring-gold-400/50 transition-transform duration-300 group-hover:scale-105 sm:h-11 sm:w-11"
+              src={SHRINE_LOGO}
+            />
+            <span className="flex flex-col leading-none">
+              <span className="font-serif text-[1.15rem] font-semibold tracking-tight text-maroon-800 min-[420px]:text-[1.35rem]">
+                Lourde Matha Church
+              </span>
+              <span className="mt-1 hidden text-[10px] font-semibold uppercase tracking-[0.24em] text-gold-600 min-[420px]:block">
+                Thalayanadu • Est. 1935
+              </span>
+            </span>
+          </button>
+
+          {/* Desktop navigation */}
+          <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Primary">
             {navItems.map((item) => {
               const isActive = currentTab === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`text-left px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors flex items-center justify-between ${
-                    isActive
-                      ? 'bg-[#dbf1ff] text-[#006780]'
-                      : 'text-[#3e484d] hover:bg-[#f4faff]'
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`relative cursor-pointer rounded-md px-2.5 py-2 text-[13px] font-semibold transition-colors xl:px-3 ${
+                    isActive ? 'text-maroon-700' : 'text-ink-700 hover:bg-maroon-600/5 hover:text-maroon-700'
                   }`}
                 >
-                  <div className="flex items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5">
                     {item.isLive && (
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#ba1a1a] animate-pulse"></span>
+                      <span className="live-dot inline-block h-1.5 w-1.5 rounded-full bg-maroon-600" aria-hidden="true" />
                     )}
-                    <span>{item.label}</span>
-                  </div>
-                  <span className="material-symbols-outlined text-base text-[#bec8cd]">
-                    chevron_right
+                    {item.label}
                   </span>
+                  <span
+                    className={`absolute inset-x-2.5 -bottom-[1px] h-[2px] rounded-full bg-gold-500 transition-all duration-300 xl:inset-x-3 ${
+                      isActive ? 'opacity-100' : 'opacity-0'
+                    }`}
+                    aria-hidden="true"
+                  />
                 </button>
               );
             })}
           </nav>
-          <div className="mt-4 pt-4 border-t border-[#dbf1ff] flex flex-col gap-2">
+
+          {/* Actions */}
+          <div className="flex shrink-0 items-center gap-2">
             <button
-              onClick={() => {
-                onOpenPrayerModal();
-                setMobileMenuOpen(false);
-              }}
-              className="w-full py-2.5 rounded-xl border border-[#d7b76e] text-[#745b1b] font-semibold text-xs text-center"
+              onClick={() => handleNavClick('live-mass')}
+              className="btn-primary btn-sm hidden !px-4 sm:inline-flex"
             >
-              Submit Prayer Request
+              <span className="live-dot inline-block h-2 w-2 rounded-full bg-gold-300" aria-hidden="true" />
+              Watch Live
             </button>
+
+            {/* Parishioner portal */}
+            <div className="relative hidden sm:block" data-portal-root>
+              <button
+                onClick={() => setPortalOpen((v) => !v)}
+                aria-expanded={portalOpen}
+                aria-haspopup="menu"
+                aria-label="Parishioner portal menu"
+                title="Parishioner Sanctuary Portal"
+                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-line bg-white text-maroon-700 transition-colors hover:border-gold-400 hover:text-maroon-600"
+              >
+                <span className="material-symbols-outlined text-[20px]">person</span>
+              </button>
+              {portalOpen && (
+                <div
+                  role="menu"
+                  className="animate-fade-in absolute right-0 z-50 mt-2 w-64 rounded-xl border border-line bg-white p-2 shadow-card"
+                >
+                  <p className="border-b border-line-soft px-3 pb-2 pt-1">
+                    <span className="block text-sm font-semibold text-ink-900">Welcome, Pilgrim</span>
+                    <span className="block text-xs text-ink-500">Guest Session</span>
+                  </p>
+                  {[
+                    { icon: 'local_fire_department', label: 'My Votive Candles', action: () => onOpenPrayerModal() },
+                    { icon: 'church', label: 'Mass Intentions Booking', action: () => handleNavClick('mass-timings') },
+                    { icon: 'assignment', label: 'Pastoral Consultation', action: () => handleNavClick('sacraments') },
+                  ].map((row) => (
+                    <button
+                      key={row.label}
+                      role="menuitem"
+                      onClick={() => {
+                        row.action();
+                        setPortalOpen(false);
+                      }}
+                      className="flex w-full cursor-pointer items-center gap-2.5 rounded-lg px-3 py-2.5 text-left text-sm text-ink-700 transition-colors hover:bg-ivory-100"
+                    >
+                      <span className="material-symbols-outlined text-[18px] text-maroon-600">{row.icon}</span>
+                      {row.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Mobile hamburger */}
             <button
-              onClick={() => {
-                handleNavClick('live-mass');
-              }}
-              className="w-full py-2.5 rounded-xl bg-[#67c7e8] text-[#005266] font-semibold text-xs text-center"
+              onClick={() => setMobileMenuOpen((v) => !v)}
+              aria-expanded={mobileMenuOpen}
+              aria-label="Toggle Navigation"
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-line bg-white text-maroon-800 transition-colors hover:border-gold-400 xl:hidden"
             >
-              Watch Sanctuary Live Stream
+              <span className="material-symbols-outlined text-[22px]">{mobileMenuOpen ? 'close' : 'menu'}</span>
             </button>
           </div>
         </div>
-      )}
+
+        {/* Mobile menu panel */}
+        {mobileMenuOpen && (
+          <nav
+            className="animate-fade-in border-t border-line bg-ivory-50 xl:hidden"
+            aria-label="Mobile"
+          >
+            <div className="container-site flex max-h-[calc(100dvh-120px)] flex-col gap-1 overflow-y-auto py-4">
+              {navItems.map((item) => {
+                const isActive = currentTab === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => handleNavClick(item.id)}
+                    aria-current={isActive ? 'page' : undefined}
+                    className={`flex cursor-pointer items-center justify-between rounded-lg px-4 py-3 text-[15px] font-semibold transition-colors ${
+                      isActive
+                        ? 'bg-maroon-600/10 text-maroon-700'
+                        : 'text-ink-700 hover:bg-ivory-100'
+                    }`}
+                  >
+                    <span className="inline-flex items-center gap-2.5">
+                      {item.isLive && (
+                        <span className="live-dot inline-block h-2 w-2 rounded-full bg-maroon-600" aria-hidden="true" />
+                      )}
+                      {item.label}
+                    </span>
+                    <span className="material-symbols-outlined text-[20px] text-ink-400">chevron_right</span>
+                  </button>
+                );
+              })}
+              <div className="mt-3 flex flex-col gap-2 border-t border-line pt-4">
+                <button onClick={() => handleNavClick('live-mass')} className="btn-primary w-full">
+                  <span className="live-dot inline-block h-2 w-2 rounded-full bg-gold-300" aria-hidden="true" />
+                  Watch Live Stream
+                </button>
+                <button
+                  onClick={() => {
+                    onOpenPrayerModal();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="btn-outline w-full"
+                >
+                  Submit Prayer Request
+                </button>
+              </div>
+            </div>
+          </nav>
+        )}
+      </div>
     </header>
   );
 };

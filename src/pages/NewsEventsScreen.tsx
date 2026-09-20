@@ -1,10 +1,62 @@
 import React, { useState } from 'react';
 import { NavigationTab, ParishEvent, Bulletin, GalleryPhoto } from '../types';
 import { PARISH_EVENTS, BULLETINS, GALLERY_PHOTOS, IMAGES } from '../data/parishData';
+import { Reveal, PageHero, SectionHeading } from '../components/ui';
 
 interface NewsEventsScreenProps {
   onNavigate: (tab: NavigationTab) => void;
 }
+
+const ministries = [
+  {
+    icon: 'import_contacts',
+    title: 'Legion of Mary',
+    tagline: 'Praesidium of Our Lady',
+    text: 'Apostolic service through weekly home visits with the Pilgrim Virgin statue, hospital care, and rosaries.',
+  },
+  {
+    icon: 'groups',
+    title: 'KCYM',
+    tagline: 'Kerala Catholic Youth Movement',
+    text: 'Youth apostolate animating the liturgy, retreats, and social service for young parishioners.',
+  },
+  {
+    icon: 'child_care',
+    title: 'Cherupushpa Mission League (CML)',
+    tagline: "Children's Missionary League",
+    text: "Forming 'little flowers' in faith through prayer, mission awareness, and acts of charity.",
+  },
+  {
+    icon: 'volunteer_activism',
+    title: 'St. Vincent de Paul Society',
+    tagline: 'Poverty Relief & Care',
+    text: 'Food distributions, emergency assistance, and compassionate home visitations for families in need.',
+  },
+  {
+    icon: 'family_restroom',
+    title: 'Mathruvedi',
+    tagline: "Mothers' Association",
+    text: 'Mothers praying unitedly for their families, parish vocations, and the sanctification of homes.',
+  },
+  {
+    icon: 'shield',
+    title: 'Pithruvedi',
+    tagline: "Fathers' Association",
+    text: "Fathers strengthening family prayer life and serving the parish in maintenance and outreach.",
+  },
+  {
+    icon: 'church',
+    title: 'Altar Servers',
+    tagline: 'Ministry of the Altar',
+    text: 'Training young boys and girls in reverent liturgical service at the altar of sacrifice.',
+  },
+  {
+    icon: 'music_note',
+    title: 'Parish Choir',
+    tagline: 'Sacred Music Ministry',
+    text: 'Leading the Holy Qurbana in song through traditional hymns and Syro-Malabar liturgical music.',
+  },
+];
 
 export const NewsEventsScreen: React.FC<NewsEventsScreenProps> = ({ onNavigate }) => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
@@ -29,444 +81,367 @@ export const NewsEventsScreen: React.FC<NewsEventsScreenProps> = ({ onNavigate }
     alert(`Downloading ${b.title} (${b.date}). The PDF is being prepared.`);
   };
 
-  return (
-    <div className="flex flex-col w-full font-body-md text-[#071e28]">
-      {/* Top Header Banner */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#e8f6ff] via-[#f4faff] to-[#ffffff] px-4 sm:px-6 lg:px-12 pt-8 pb-12">
-        <div className="max-w-7xl mx-auto space-y-4">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#dbf1ff] text-[#006780] font-label-sm text-[11px] uppercase tracking-widest font-semibold">
-              <span className="material-symbols-outlined text-[15px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-                groups
-              </span>
-              Parish Life &amp; Chronicle
-            </span>
-            <span className="text-[#bec8cd] font-label-md">•</span>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#ffdf98]/40 text-[#5e4706] font-label-sm text-[11px] font-semibold">
-              <span className="material-symbols-outlined text-[14px]">local_activity</span>
-              Living Stones of Sancta Maria
-            </span>
-          </div>
+  const categories = [
+    { id: 'all', label: 'All Calendar Events' },
+    { id: 'liturgy', label: 'Liturgical Feasts' },
+    { id: 'formation', label: 'Youth & Catechesis' },
+    { id: 'charity', label: 'Charity Outreaches' },
+    { id: 'community', label: 'Fellowship & Guilds' },
+  ];
 
-          <div className="space-y-3 max-w-3xl">
-            <span className="font-label-md text-xs uppercase tracking-[0.2em] text-[#006687] font-semibold">
-              Communion, Formation &amp; Apostolate
-            </span>
-            <h1 className="font-headline-lg lg:font-display-lg text-3xl sm:text-4xl lg:text-[48px] text-[#071e28] font-serif font-semibold leading-tight">
-              Parish Announcements, Catechesis &amp; Sacred Events
-            </h1>
-            <p className="font-headline-sm text-base sm:text-lg italic text-[#006687] font-serif leading-relaxed">
+  return (
+    <div className="flex w-full flex-col">
+      <PageHero
+        eyebrow="Parish Life & Chronicle"
+        title="Parish Announcements, Catechesis & Sacred Events"
+        description="Stay connected with our lively parish fraternity. Discover upcoming patronal celebrations, retreat days, faith formation courses, charitable mercy projects, and download the current Sunday liturgical bulletin."
+        image={IMAGES.feastCandlelightProcession}
+        imageAlt="Candlelight procession during annual Marian feast"
+      />
+
+      {/* Scripture verse band */}
+      <section className="border-b border-line-soft bg-ivory-100">
+        <div className="container-site py-8">
+          <Reveal className="flex max-w-3xl flex-col items-start gap-2">
+            <span className="eyebrow">Communion, Formation &amp; Apostolate</span>
+            <p className="serif-italic text-lg leading-relaxed text-maroon-700 sm:text-xl">
               “So we, though many, are one body in Christ, and individually members one of another.”
-              <span className="font-label-md text-xs not-italic text-[#745b1b] ml-2 font-semibold">— Romans 12:5</span>
+              <span className="ml-2 text-xs not-italic font-semibold text-gold-700">— Romans 12:5</span>
             </p>
-            <p className="font-body-lg text-sm sm:text-base text-[#3e484d] leading-relaxed">
-              Stay connected with our lively parish fraternity. Discover upcoming patronal celebrations, retreat days, faith formation courses, charitable mercy projects, and download the current Sunday liturgical bulletin.
-            </p>
-          </div>
+            <p className="t-small">Living Stones of Lourde Matha</p>
+          </Reveal>
         </div>
       </section>
 
-      {/* Featured Solemn Parish Feast Banner */}
-      <section className="w-full px-4 sm:px-6 lg:px-12 -mt-4 mb-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-[#006687] via-[#006780] to-[#005266] text-white shadow-xl p-6 sm:p-10 border border-[#67c7e8]/40">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-              <div className="lg:col-span-7 space-y-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-[#ffdf98] font-label-sm text-xs uppercase tracking-wider font-semibold">
-                  <span className="material-symbols-outlined text-sm">stars</span>
-                  <span>Grand Solemnity • September 8–16, 2026</span>
-                </div>
-                <h2 className="font-headline-lg lg:font-display-md text-2xl sm:text-3xl lg:text-4xl text-white font-serif font-bold">
-                  Feast of the Nativity of the Blessed Virgin Mary
-                </h2>
-                <p className="font-body-md text-xs sm:text-sm text-[#e8f6ff] leading-relaxed">
-                  Join our nine days of solemn Novena culminating in the grand candlelight Eucharistic and Marian procession through the sanctuary gardens, blessing of newly born children, choral orchestra concert, and festive parish agape meal.
-                </p>
-                <div className="flex flex-wrap gap-3 pt-2">
-                  <button
-                    onClick={() => alert("Feast of the Nativity 2026 complete 9-day schedule PDF initiated.")}
-                    className="px-5 py-2.5 rounded-xl bg-[#67c7e8] hover:bg-white text-[#005266] hover:text-[#006780] font-label-md text-xs sm:text-sm font-semibold transition-all shadow-sm cursor-pointer"
-                  >
-                    Download Feast Programme (PDF)
-                  </button>
-                  <button
-                    onClick={() => alert("Thank you for volunteering! Please contact the parish office.")}
-                    className="px-5 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white font-label-md text-xs sm:text-sm font-semibold transition-colors cursor-pointer"
-                  >
-                    Volunteer for Procession Guard
-                  </button>
-                </div>
-              </div>
-
-              <div className="lg:col-span-5">
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[16/10] bg-[#1e333e] border border-white/20">
-                  <img
-                    alt="Candlelight procession during annual Marian feast"
-                    className="w-full h-full object-cover"
-                    src={IMAGES.feastCandlelightProcession}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
-                    <span className="text-white text-xs font-semibold">
-                      Candlelight Rosary Procession with Over 2,500 Pilgrims
-                    </span>
+      {/* Featured solemn parish feast banner */}
+      <section className="bg-ivory-50">
+        <div className="container-site py-10 lg:py-14">
+          <Reveal>
+            <div className="card overflow-hidden !border-0 bg-maroon-900 text-ivory-100 shadow-soft">
+              <div className="grid grid-cols-1 items-center gap-8 p-6 sm:p-10 lg:grid-cols-12">
+                <div className="space-y-4 lg:col-span-7">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-ivory-100/10 px-3.5 py-1.5 text-[12px] font-bold uppercase tracking-[0.14em] text-gold-300">
+                    <span className="material-symbols-outlined text-[16px]">stars</span>
+                    Grand Solemnity • September 8–16, 2026
+                  </span>
+                  <h2 className="t-h2 text-balance text-ivory-50">
+                    Feast of the Nativity of the Blessed Virgin Mary
+                  </h2>
+                  <p className="text-[14px] leading-relaxed text-ivory-200/85 sm:text-[15px]">
+                    Join our nine days of solemn Novena culminating in the grand candlelight Eucharistic and Marian procession through the sanctuary gardens, blessing of newly born children, choral orchestra concert, and festive parish agape meal.
+                  </p>
+                  <div className="flex flex-col gap-3 pt-2 sm:flex-row">
+                    <button
+                      onClick={() => alert("Feast of the Nativity 2026 complete 9-day schedule PDF initiated.")}
+                      className="btn-gold"
+                    >
+                      <span className="material-symbols-outlined text-[20px]">download</span>
+                      Download Feast Programme (PDF)
+                    </button>
+                    <button
+                      onClick={() => alert("Thank you for volunteering! Please contact the parish office.")}
+                      className="btn-outline-light"
+                    >
+                      Volunteer for Procession Guard
+                    </button>
                   </div>
+                </div>
+                <div className="lg:col-span-5">
+                  <figure className="group relative aspect-[16/10] overflow-hidden rounded-xl border border-ivory-100/15">
+                    <img
+                      alt="Candlelight procession during annual Marian feast"
+                      className="img-zoom h-full w-full object-cover"
+                      src={IMAGES.feastCandlelightProcession}
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-maroon-950/85 via-maroon-950/15 to-transparent" />
+                    <figcaption className="absolute inset-x-0 bottom-0 p-4 text-[13px] font-semibold text-ivory-100">
+                      Candlelight Rosary Procession with Over 2,500 Pilgrims
+                    </figcaption>
+                  </figure>
                 </div>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* Events Filter Bar */}
-      <section className="w-full px-4 sm:px-6 lg:px-12 py-4 bg-[#ffffff]">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex flex-wrap items-center gap-2">
-            {[
-              { id: 'all', label: 'All Calendar Events' },
-              { id: 'liturgy', label: 'Liturgical Feasts' },
-              { id: 'formation', label: 'Youth & Catechesis' },
-              { id: 'charity', label: 'Charity Outreaches' },
-              { id: 'community', label: 'Fellowship & Guilds' },
-            ].map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`px-4 py-2 rounded-xl font-label-md text-xs font-semibold transition-colors cursor-pointer ${
-                  activeCategory === cat.id
-                    ? 'bg-[#006780] text-white shadow-xs'
-                    : 'bg-[#e8f6ff] text-[#3e484d] hover:bg-[#dbf1ff] hover:text-[#071e28]'
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
-          <span className="font-label-sm text-xs text-[#6e797d]">
-            Showing {filteredEvents.length} upcoming events
-          </span>
+      {/* Events filter bar */}
+      <section className="bg-ivory-50">
+        <div className="container-site pb-2">
+          <Reveal>
+            <div className="card flex flex-col gap-2 p-2.5 sm:flex-row sm:items-center sm:justify-between" role="tablist" aria-label="Filter parish events">
+              <div className="flex flex-wrap gap-1.5">
+                {categories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    role="tab"
+                    aria-selected={activeCategory === cat.id}
+                    onClick={() => setActiveCategory(cat.id)}
+                    className={`cursor-pointer rounded-lg px-4 py-2 text-[13px] font-semibold transition-all ${
+                      activeCategory === cat.id
+                        ? 'bg-maroon-600 text-ivory-50 shadow-sm'
+                        : 'text-ink-700 hover:bg-ivory-100'
+                    }`}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+              <span className="t-small shrink-0 px-2">
+                Showing {filteredEvents.length} upcoming events
+              </span>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* Events Grid */}
-      <section className="w-full px-4 sm:px-6 lg:px-12 py-8 bg-[#ffffff]">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredEvents.map((event: ParishEvent) => (
-              <div
-                key={event.id}
-                className="rounded-2xl bg-[#ffffff] shadow-xs hover:shadow-md transition-all overflow-hidden flex flex-col justify-between border border-[#dbf1ff] group"
-              >
-                <div>
-                  <div className="relative aspect-[16/10] overflow-hidden bg-[#c7ddeb]">
+      {/* Events grid */}
+      <section className="bg-ivory-50" aria-label="Upcoming parish events">
+        <div className="container-site py-8 lg:py-10">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {filteredEvents.map((event: ParishEvent, i: number) => (
+              <Reveal key={event.id} delay={(i % 3) * 80}>
+                <article className="card card-hover group flex h-full flex-col overflow-hidden">
+                  <div className="relative aspect-[16/10] overflow-hidden bg-ivory-200">
                     <img
                       alt={event.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="img-zoom h-full w-full object-cover"
                       src={event.image}
+                      loading="lazy"
                     />
-                    <div className="absolute top-3 left-3 px-3 py-1 rounded-lg bg-white/90 backdrop-blur text-[#006780] font-label-md text-xs shadow-xs font-semibold">
+                    <span className="absolute left-4 top-4 rounded-md bg-ivory-50/95 px-3 py-1.5 text-[12px] font-bold text-maroon-700 shadow-sm backdrop-blur">
                       {event.date}
-                    </div>
+                    </span>
                   </div>
-
-                  <div className="p-5 space-y-2">
-                    <span className="font-label-sm text-[11px] uppercase tracking-wider text-[#745b1b] font-bold block">
+                  <div className="flex flex-1 flex-col p-5 sm:p-6">
+                    <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-gold-600">
                       {event.category}
                     </span>
-                    <h3 className="font-title-lg text-base text-[#071e28] font-bold group-hover:text-[#006780] transition-colors">
+                    <h3 className="t-h3 mt-2 !text-[1.08rem] text-ink-950 transition-colors group-hover:text-maroon-700">
                       {event.title}
                     </h3>
-                    <p className="font-body-sm text-xs text-[#3e484d] leading-relaxed">
+                    <p className="t-small mt-2 flex-1">
                       {event.description}
                     </p>
-
-                    <div className="pt-2 space-y-1 text-xs text-[#3e484d]">
-                      <div className="flex items-center gap-1.5">
-                        <span className="material-symbols-outlined text-sm text-[#006780]">schedule</span>
-                        <span>{event.time}</span>
+                    <dl className="mt-4 space-y-1.5 border-t border-line-soft pt-3.5 text-[13px] text-ink-700">
+                      <div className="flex items-center gap-2">
+                        <dt className="sr-only">Time</dt>
+                        <dd className="inline-flex items-center gap-1.5">
+                          <span className="material-symbols-outlined text-[18px] text-maroon-600">schedule</span>
+                          <span>{event.time}</span>
+                        </dd>
                       </div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="material-symbols-outlined text-sm text-[#006780]">location_on</span>
-                        <span>{event.location}</span>
+                      <div className="flex items-center gap-2">
+                        <dt className="sr-only">Location</dt>
+                        <dd className="inline-flex items-center gap-1.5">
+                          <span className="material-symbols-outlined text-[18px] text-maroon-600">location_on</span>
+                          <span>{event.location}</span>
+                        </dd>
                       </div>
-                    </div>
+                    </dl>
                   </div>
-                </div>
-
-                <div className="p-5 pt-0">
-                  <button
-                    onClick={() => alert(`RSVP registered for ${event.title}. We look forward to seeing you!`)}
-                    className="w-full py-2 px-3 rounded-xl bg-[#e8f6ff] hover:bg-[#dbf1ff] text-[#006780] font-label-md text-xs font-semibold transition-colors flex items-center justify-center gap-1 cursor-pointer"
-                  >
-                    <span>Register / Learn More</span>
-                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                  </button>
-                </div>
-              </div>
+                  <div className="p-5 pt-0 sm:p-6 sm:pt-0">
+                    <button
+                      onClick={() => alert(`RSVP registered for ${event.title}. We look forward to seeing you!`)}
+                      className="btn-outline btn-sm w-full"
+                    >
+                      Register / Learn More
+                      <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                    </button>
+                  </div>
+                </article>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Weekly Sunday Bulletins Archive Section */}
-      <section className="w-full px-4 sm:px-6 lg:px-12 py-14 bg-[#e8f6ff]" id="bulletins">
-        <div className="max-w-7xl mx-auto space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-            <div>
-              <span className="font-label-md text-xs uppercase tracking-widest text-[#006780] font-semibold block">
-                Liturgical Publications
-              </span>
-              <h2 className="font-headline-lg text-2xl sm:text-3xl text-[#071e28] font-serif font-semibold">
-                Weekly Sunday Bulletins Archive
-              </h2>
+      {/* Weekly Sunday bulletins archive */}
+      <section className="bg-ivory-100" id="bulletins" aria-label="Weekly Sunday bulletins archive">
+        <div className="container-site py-12 lg:py-16">
+          <Reveal className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-end">
+            <div className="flex max-w-2xl flex-col gap-3">
+              <span className="eyebrow">Liturgical Publications</span>
+              <h2 className="t-h2 text-balance text-ink-950">Weekly Sunday Bulletins Archive</h2>
             </div>
-            <p className="font-body-sm text-xs text-[#3e484d] max-w-sm">
-              Read parish notices, Mass intention schedules, scripture commentary, and financial stewardship accounts published every Sunday.
+            <p className="t-small max-w-sm">
+              Read parish notices, Qurbana intention schedules, scripture commentary, and financial stewardship accounts published every Sunday.
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {BULLETINS.map((b: Bulletin) => (
-              <div
-                key={b.id}
-                className="p-5 rounded-2xl bg-[#ffffff] shadow-xs flex flex-col justify-between border border-[#dbf1ff] hover:shadow-md transition-shadow"
-              >
-                <div className="space-y-2">
-                  <div className="w-10 h-10 rounded-xl bg-[#dbf1ff] text-[#006780] flex items-center justify-center">
-                    <span className="material-symbols-outlined text-2xl">menu_book</span>
-                  </div>
-                  <div>
-                    <span className="font-label-sm text-[11px] text-[#745b1b] uppercase tracking-wider font-semibold block">
-                      {b.date}
-                    </span>
-                    <h4 className="font-title-md text-sm text-[#071e28] font-bold mt-0.5">
-                      {b.title}
-                    </h4>
-                  </div>
-                  <p className="font-body-sm text-xs text-[#3e484d]">
+          </Reveal>
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {BULLETINS.map((b: Bulletin, i: number) => (
+              <Reveal key={b.id} delay={i * 70}>
+                <article className="card flex h-full flex-col p-5 transition-shadow hover:shadow-card-hover">
+                  <span className="icon-tile"><span className="material-symbols-outlined text-[22px]">menu_book</span></span>
+                  <p className="mt-4 text-[11px] font-bold uppercase tracking-[0.14em] text-gold-600">
+                    {b.date}
+                  </p>
+                  <h3 className="mt-1 text-[15px] font-bold leading-snug text-ink-950">
+                    {b.title}
+                  </h3>
+                  <p className="t-small mt-2 flex-1">
                     Contains liturgical readings, parish financial report, and announcements.
                   </p>
-                </div>
-
-                <div className="pt-4 border-t border-[#dbf1ff] flex items-center justify-between">
-                  <span className="font-label-sm text-[11px] text-[#6e797d]">{b.fileSize}</span>
-                  <button
-                    onClick={() => handleDownloadBulletin(b)}
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#006780] hover:text-[#006687] transition-colors cursor-pointer"
-                  >
-                    <span>Download PDF</span>
-                    <span className="material-symbols-outlined text-sm">download</span>
-                  </button>
-                </div>
-              </div>
+                  <div className="mt-4 flex items-center justify-between border-t border-line-soft pt-3.5">
+                    <span className="text-[12px] text-ink-500">{b.fileSize}</span>
+                    <button
+                      onClick={() => handleDownloadBulletin(b)}
+                      className="link-arrow !text-[13px]"
+                    >
+                      Download PDF
+                      <span className="material-symbols-outlined text-[16px]">download</span>
+                    </button>
+                  </div>
+                </article>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Parish Ministries & Fraternities */}
-      <section className="w-full px-4 sm:px-6 lg:px-12 py-14 bg-[#ffffff]">
-        <div className="max-w-7xl mx-auto space-y-8">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="font-label-md text-xs uppercase tracking-widest text-[#006780] font-semibold">
-              Parish Fraternity
-            </span>
-            <h2 className="font-headline-lg text-2xl sm:text-3xl text-[#071e28] font-serif font-semibold">
-              Ministries &amp; Devotional Societies
-            </h2>
-            <p className="font-body-md text-xs sm:text-sm text-[#3e484d]">
-              Every parishioner is invited to bear fruit in service. Find your community within our vibrant liturgical and charitable apostolates.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="p-5 rounded-2xl bg-[#e8f6ff] space-y-2 border border-[#dbf1ff]">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white text-[#006780] flex items-center justify-center shadow-2xs">
-                  <span className="material-symbols-outlined text-2xl">shield</span>
-                </div>
-                <div>
-                  <h4 className="font-title-md text-sm text-[#071e28] font-bold">Knights of Our Lady</h4>
-                  <span className="text-[11px] text-[#006687] font-semibold">Men's Spiritual Fraternity</span>
-                </div>
-              </div>
-              <p className="font-body-sm text-xs text-[#3e484d] leading-relaxed">
-                Dedicated Catholic men guarding processions, serving at high solemnities, and maintaining the sanctuary grounds.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-[#e8f6ff] space-y-2 border border-[#dbf1ff]">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white text-[#745b1b] flex items-center justify-center shadow-2xs">
-                  <span className="material-symbols-outlined text-2xl">child_care</span>
-                </div>
-                <div>
-                  <h4 className="font-title-md text-sm text-[#071e28] font-bold">Christian Mothers</h4>
-                  <span className="text-[11px] text-[#745b1b] font-semibold">Confraternity of Intercession</span>
-                </div>
-              </div>
-              <p className="font-body-sm text-xs text-[#3e484d] leading-relaxed">
-                Mothers praying unitedly for the sanctification and Christian upbringing of their children and parish vocations.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-[#e8f6ff] space-y-2 border border-[#dbf1ff]">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white text-[#006780] flex items-center justify-center shadow-2xs">
-                  <span className="material-symbols-outlined text-2xl">volunteer_activism</span>
-                </div>
-                <div>
-                  <h4 className="font-title-md text-sm text-[#071e28] font-bold">St. Vincent de Paul Society</h4>
-                  <span className="text-[11px] text-[#006780] font-semibold">Poverty Relief &amp; Care</span>
-                </div>
-              </div>
-              <p className="font-body-sm text-xs text-[#3e484d] leading-relaxed">
-                Weekly food pantry distributions, rental assistance, and compassionate home visitations for homebound parishioners.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-[#e8f6ff] space-y-2 border border-[#dbf1ff]">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white text-[#006780] flex items-center justify-center shadow-2xs">
-                  <span className="material-symbols-outlined text-2xl">music_note</span>
-                </div>
-                <div>
-                  <h4 className="font-title-md text-sm text-[#071e28] font-bold">Sancta Maria Polyphonic Choir</h4>
-                  <span className="text-[11px] text-[#006780] font-semibold">Sacred Music Ministry</span>
-                </div>
-              </div>
-              <p className="font-body-sm text-xs text-[#3e484d] leading-relaxed">
-                Elevating the Sacred Liturgy through Gregorian chant, Renaissance polyphony, and traditional sacred hymns.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-[#e8f6ff] space-y-2 border border-[#dbf1ff]">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white text-[#006780] flex items-center justify-center shadow-2xs">
-                  <span className="material-symbols-outlined text-2xl">church</span>
-                </div>
-                <div>
-                  <h4 className="font-title-md text-sm text-[#071e28] font-bold">St. Tarcisius Altar Guild</h4>
-                  <span className="text-[11px] text-[#006780] font-semibold">Altar Servers &amp; Sacristans</span>
-                </div>
-              </div>
-              <p className="font-body-sm text-xs text-[#3e484d] leading-relaxed">
-                Training young boys and girls in reverent liturgical service at the altar of sacrifice and holy devotions.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-[#e8f6ff] space-y-2 border border-[#dbf1ff]">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white text-[#745b1b] flex items-center justify-center shadow-2xs">
-                  <span className="material-symbols-outlined text-2xl">import_contacts</span>
-                </div>
-                <div>
-                  <h4 className="font-title-md text-sm text-[#071e28] font-bold">Legion of Mary</h4>
-                  <span className="text-[11px] text-[#745b1b] font-semibold">Praesidium Regina Pacis</span>
-                </div>
-              </div>
-              <p className="font-body-sm text-xs text-[#3e484d] leading-relaxed">
-                Apostolic evangelization through weekly home visits with the Pilgrim Virgin statue, hospital care, and rosaries.
-              </p>
-            </div>
+      {/* Parish ministries & fraternities */}
+      <section className="bg-ivory-50">
+        <div className="container-site py-12 lg:py-16">
+          <SectionHeading
+            eyebrow="Parish Fraternity"
+            title="Ministries & Devotional Societies"
+            description="Every parishioner is invited to bear fruit in service. Find your community within our vibrant liturgical and charitable apostolates."
+          />
+          <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {ministries.map((m, i) => (
+              <Reveal key={m.title} delay={(i % 3) * 80}>
+                <article className="card h-full p-5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-card-hover sm:p-6">
+                  <div className="flex items-center gap-3.5">
+                    <span className={i % 3 === 1 ? 'icon-tile-gold' : 'icon-tile'}>
+                      <span className="material-symbols-outlined text-[22px]">{m.icon}</span>
+                    </span>
+                    <div>
+                      <h3 className="text-[15px] font-bold text-ink-950">{m.title}</h3>
+                      <p className="text-[12px] font-semibold text-maroon-600">{m.tagline}</p>
+                    </div>
+                  </div>
+                  <p className="t-small mt-3">{m.text}</p>
+                </article>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Sancta Maria in Pictures (Parish Photo Gallery) */}
-      <section className="w-full px-4 sm:px-6 lg:px-12 py-14 bg-[#e8f6ff]">
-        <div className="max-w-7xl mx-auto space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-            <div>
-              <span className="font-label-md text-xs uppercase tracking-widest text-[#006780] font-semibold block">
-                Visual Chronicle
-              </span>
-              <h2 className="font-headline-lg text-2xl sm:text-3xl text-[#071e28] font-serif font-semibold">
-                Sancta Maria in Pictures
-              </h2>
+      {/* Lourde Matha in pictures — parish photo gallery */}
+      <section className="bg-ivory-100">
+        <div className="container-site py-12 lg:py-16">
+          <Reveal className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-end">
+            <div className="flex max-w-2xl flex-col gap-3">
+              <span className="eyebrow">Visual Chronicle</span>
+              <h2 className="t-h2 text-balance text-ink-950">Lourde Matha in Pictures</h2>
             </div>
-            <span className="font-body-sm text-xs text-[#3e484d]">
+            <p className="t-small max-w-sm">
               Moments of communion, solemn liturgies, and sanctuary beauty.
-            </span>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-            {GALLERY_PHOTOS.map((photo: GalleryPhoto) => (
-              <div
-                key={photo.id}
-                onClick={() => setSelectedPhoto(photo.src)}
-                className="group relative aspect-square rounded-2xl overflow-hidden bg-[#c7ddeb] shadow-2xs cursor-pointer border border-[#dbf1ff]"
-              >
-                <img
-                  alt={photo.caption}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  src={photo.src}
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2 text-white text-[11px] font-medium leading-tight">
-                  {photo.caption}
-                </div>
-              </div>
+            </p>
+          </Reveal>
+          <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+            {GALLERY_PHOTOS.map((photo: GalleryPhoto, i: number) => (
+              <Reveal key={photo.id} delay={(i % 6) * 60}>
+                <button
+                  onClick={() => setSelectedPhoto(photo.src)}
+                  aria-label={`View photo: ${photo.caption}`}
+                  className="group relative block aspect-square w-full cursor-pointer overflow-hidden rounded-xl border border-line bg-ivory-200 shadow-sm transition-shadow hover:shadow-card"
+                >
+                  <img
+                    alt={photo.caption}
+                    className="img-zoom h-full w-full object-cover"
+                    src={photo.src}
+                    loading="lazy"
+                  />
+                  <span className="absolute inset-0 flex items-end bg-gradient-to-t from-maroon-950/80 to-transparent p-3 text-left text-[11px] font-semibold leading-tight text-ivory-100 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                    {photo.caption}
+                  </span>
+                </button>
+              </Reveal>
             ))}
           </div>
 
           {selectedPhoto && (
             <div
               onClick={() => setSelectedPhoto(null)}
-              className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 cursor-pointer"
+              onKeyDown={(e) => e.key === 'Escape' && setSelectedPhoto(null)}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Expanded photo view"
+              className="fixed inset-0 z-50 flex cursor-pointer items-center justify-center bg-maroon-950/90 p-4"
             >
-              <div className="relative max-w-4xl max-h-[85vh] rounded-2xl overflow-hidden shadow-2xl bg-black">
+              <div className="relative max-h-[85vh] max-w-4xl overflow-hidden rounded-2xl bg-maroon-950 shadow-2xl">
                 <img
                   src={selectedPhoto}
                   alt="Expanded view"
-                  className="max-h-[80vh] w-auto object-contain mx-auto"
+                  className="mx-auto max-h-[80vh] w-auto object-contain"
                 />
-                <div className="absolute top-3 right-3 text-white bg-black/60 rounded-full p-1 cursor-pointer">
+                <button
+                  onClick={() => setSelectedPhoto(null)}
+                  aria-label="Close photo viewer"
+                  className="absolute right-3 top-3 cursor-pointer rounded-full bg-maroon-950/70 p-1.5 text-ivory-50 transition-colors hover:bg-maroon-950"
+                >
                   <span className="material-symbols-outlined text-2xl">close</span>
-                </div>
+                </button>
               </div>
             </div>
           )}
         </div>
       </section>
 
-      {/* Newsletter Subscription Card (Sancta Maria Herald) */}
-      <section className="w-full px-4 sm:px-6 lg:px-12 py-14 bg-[#ffffff]">
-        <div className="max-w-4xl mx-auto">
-          <div className="rounded-3xl bg-gradient-to-r from-[#006687] to-[#006780] p-8 sm:p-10 text-white shadow-xl text-center space-y-4">
-            <span className="material-symbols-outlined text-4xl text-[#67c7e8]">mark_email_read</span>
-            <h2 className="font-headline-lg text-2xl sm:text-3xl font-serif text-white font-semibold">
-              Subscribe to The Sancta Maria Herald
-            </h2>
-            <p className="font-body-md text-xs sm:text-sm text-[#e8f6ff] max-w-xl mx-auto leading-relaxed">
-              Receive the digital Sunday Bulletin, pastoral reflections from Fr. Joseph Mathew, liturgical calendar reminders, and emergency prayer requests directly in your email inbox every Friday morning.
-            </p>
+      {/* Newsletter subscription — Lourde Matha Herald */}
+      <section className="bg-ivory-50">
+        <div className="container-site py-12 lg:py-16">
+          <Reveal>
+            <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl bg-maroon-900 p-8 text-center shadow-soft sm:p-12">
+              <div
+                className="pointer-events-none absolute inset-0 opacity-30"
+                aria-hidden="true"
+                style={{
+                  backgroundImage: 'radial-gradient(circle at 25% 15%, rgba(201,164,94,0.35), transparent 45%), radial-gradient(circle at 80% 90%, rgba(201,164,94,0.2), transparent 40%)',
+                }}
+              />
+              <div className="relative space-y-4">
+                <span className="icon-tile-gold mx-auto !h-14 !w-14">
+                  <span className="material-symbols-outlined text-[28px]">mark_email_read</span>
+                </span>
+                <h2 className="t-h2 text-balance text-ivory-50">
+                  Subscribe to The Lourde Matha Herald
+                </h2>
+                <p className="mx-auto max-w-xl text-[14px] leading-relaxed text-ivory-200/85">
+                  Receive the digital Sunday Bulletin, pastoral reflections from Fr. Sebastian Thumbamattam, liturgical calendar reminders, and emergency prayer requests directly in your email inbox every Friday morning.
+                </p>
 
-            {subscribed ? (
-              <div className="p-4 rounded-xl bg-white/20 text-[#ffdf98] font-title-md text-sm font-semibold inline-block">
-                Thank you for subscribing! You will receive this Friday's bulletin.
+                {subscribed ? (
+                  <p className="inline-block rounded-xl bg-ivory-100/10 px-6 py-3.5 text-[14px] font-semibold text-gold-300 ring-1 ring-gold-400/40" role="status">
+                    Thank you for subscribing! You will receive this Friday's bulletin.
+                  </p>
+                ) : (
+                  <form onSubmit={handleSubscribe} className="mx-auto flex max-w-md flex-col gap-2.5 pt-1 sm:flex-row">
+                    <label htmlFor="herald-email" className="sr-only">Email address</label>
+                    <input
+                      id="herald-email"
+                      type="email"
+                      required
+                      value={newsletterEmail}
+                      onChange={(e) => setNewsletterEmail(e.target.value)}
+                      placeholder="Enter your email address..."
+                      className="input !border-transparent !bg-ivory-50 !py-3"
+                    />
+                    <button type="submit" className="btn-gold shrink-0">
+                      Subscribe Free
+                    </button>
+                  </form>
+                )}
+
+                <p className="text-[12px] text-ivory-200/60">
+                  We respect your sacred privacy. Unsubscribe at any time with a single click.
+                </p>
               </div>
-            ) : (
-              <form onSubmit={handleSubscribe} className="max-w-md mx-auto flex flex-col sm:flex-row gap-2 pt-2">
-                <input
-                  type="email"
-                  required
-                  value={newsletterEmail}
-                  onChange={(e) => setNewsletterEmail(e.target.value)}
-                  placeholder="Enter your email address..."
-                  className="flex-1 px-4 py-3 rounded-xl bg-white text-[#071e28] placeholder:text-[#6e797d] text-xs sm:text-sm focus:outline-none"
-                />
-                <button
-                  type="submit"
-                  className="px-6 py-3 rounded-xl bg-[#67c7e8] hover:bg-white text-[#005266] hover:text-[#006780] font-label-md text-xs sm:text-sm font-semibold transition-all shadow-md cursor-pointer"
-                >
-                  Subscribe Free
-                </button>
-              </form>
-            )}
-
-            <p className="font-body-sm text-[11px] text-white/70">
-              We respect your sacred privacy. Unsubscribe at any time with a single click.
-            </p>
-          </div>
+            </div>
+          </Reveal>
         </div>
       </section>
     </div>

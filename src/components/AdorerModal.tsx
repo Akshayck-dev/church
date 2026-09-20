@@ -27,89 +27,60 @@ export const AdorerModal: React.FC<AdorerModalProps> = ({ isOpen, onClose }) => 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1e333e]/60 backdrop-blur-sm p-4 overflow-y-auto">
-      <div className="bg-[#ffffff] rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative border border-[#dbf1ff]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-maroon-950/70 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Sign up as an adoration guardian">
+      <div className="card relative w-full max-w-lg p-6 sm:p-8">
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 w-9 h-9 rounded-full bg-[#dbf1ff] hover:bg-[#d5ecfa] text-[#071e28] flex items-center justify-center transition-colors"
-          aria-label="Close"
+          className="absolute right-5 top-5 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-ivory-100 text-ink-900 transition-colors hover:bg-ivory-200"
+          aria-label="Close modal"
         >
           <span className="material-symbols-outlined text-[20px]">close</span>
         </button>
 
         {isSuccess ? (
-          <div className="text-center py-6 space-y-3">
-            <div className="w-14 h-14 rounded-full bg-[#ffdf98] text-[#745b1b] flex items-center justify-center mx-auto">
-              <span className="material-symbols-outlined text-3xl">verified</span>
-            </div>
-            <h3 className="font-headline-sm text-xl text-[#071e28]">Adoration Guard Registered</h3>
-            <p className="font-body-sm text-[#3e484d]">
+          <div className="space-y-3 py-6 text-center">
+            <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold-100 text-gold-700">
+              <span className="material-symbols-outlined text-[32px]">verified</span>
+            </span>
+            <h3 className="font-serif text-[1.4rem] font-semibold text-ink-950">Adoration Guard Registered</h3>
+            <p className="t-body mx-auto max-w-md">
               Thank you for keeping holy watch with our Lord in the Most Blessed Sacrament. The chapel coordinator will reach out with the 24-hour keycode and orientation booklet.
             </p>
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="flex items-center gap-3 border-b border-[#dbf1ff] pb-3">
-              <div className="w-10 h-10 rounded-full bg-[#ffdf98]/70 text-[#745b1b] flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-2xl">local_fire_department</span>
-              </div>
+            <div className="flex items-center gap-3.5 border-b border-line-soft pb-4">
+              <span className="icon-tile-gold !h-11 !w-11"><span className="material-symbols-outlined text-[22px]">local_fire_department</span></span>
               <div>
-                <span className="font-label-sm text-[11px] uppercase tracking-wider text-[#745b1b] font-semibold">
+                <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-gold-700">
                   Perpetual Adoration Chapel
                 </span>
-                <h3 className="font-headline-sm text-xl text-[#071e28]">Sign Up as an Adoration Guardian</h3>
+                <h3 className="mt-0.5 font-serif text-[1.3rem] font-semibold text-ink-950">Sign Up as an Adoration Guardian</h3>
               </div>
             </div>
 
-            <p className="font-body-sm text-[#3e484d]">
+            <p className="t-body">
               Guardians commit to one assigned hour each week so that the Blessed Sacrament in our golden monstrance is never left unattended.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-3.5">
               <div>
-                <label className="block font-label-md text-xs text-[#071e28] mb-1">Full Name *</label>
-                <input
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. John Maria Doe"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#f4faff] border border-[#bec8cd]/50 text-sm focus:outline-none focus:ring-2 focus:ring-[#745b1b]"
-                />
+                <label className="label" htmlFor="adorer-name">Full Name *</label>
+                <input id="adorer-name" type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Mariamma Joseph" className="input" />
               </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div>
-                  <label className="block font-label-md text-xs text-[#071e28] mb-1">Phone Number (For Gate Access) *</label>
-                  <input
-                    type="tel"
-                    required
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+1 (555) 000-1234"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#f4faff] border border-[#bec8cd]/50 text-sm focus:outline-none focus:ring-2 focus:ring-[#745b1b]"
-                  />
+                  <label className="label" htmlFor="adorer-phone">Phone Number (For Gate Access) *</label>
+                  <input id="adorer-phone" type="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 98XXX XXXXX" className="input" />
                 </div>
                 <div>
-                  <label className="block font-label-md text-xs text-[#071e28] mb-1">Email Address *</label>
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="john@domain.com"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#f4faff] border border-[#bec8cd]/50 text-sm focus:outline-none focus:ring-2 focus:ring-[#745b1b]"
-                  />
+                  <label className="label" htmlFor="adorer-email">Email Address *</label>
+                  <input id="adorer-email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="john@domain.com" className="input" />
                 </div>
               </div>
-
               <div>
-                <label className="block font-label-md text-xs text-[#071e28] mb-1">Preferred Day & Time Window *</label>
-                <select
-                  value={timeWindow}
-                  onChange={(e) => setTimeWindow(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#f4faff] border border-[#bec8cd]/50 text-sm focus:outline-none focus:ring-2 focus:ring-[#745b1b]"
-                >
+                <label className="label" htmlFor="adorer-window">Preferred Day &amp; Time Window *</label>
+                <select id="adorer-window" value={timeWindow} onChange={(e) => setTimeWindow(e.target.value)} className="input">
                   <option>Tuesday Midnight Watch (02:00 AM - 03:00 AM)</option>
                   <option>Thursday Dawn Watch (05:00 AM - 06:00 AM)</option>
                   <option>Friday Midday (12:00 PM - 01:00 PM)</option>
@@ -118,21 +89,13 @@ export const AdorerModal: React.FC<AdorerModalProps> = ({ isOpen, onClose }) => 
                   <option>Substitute List (Flexible as needed)</option>
                 </select>
               </div>
-
-              <div className="pt-2 flex justify-end gap-2.5">
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="px-4 py-2 rounded-xl bg-[#dbf1ff] text-[#071e28] text-xs font-semibold hover:bg-[#d5ecfa]"
-                >
+              <div className="flex justify-end gap-2.5 pt-2">
+                <button type="button" onClick={onClose} className="btn-outline btn-sm">
                   Cancel
                 </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2 rounded-xl bg-[#745b1b] text-white text-xs font-semibold hover:bg-[#5e4706] shadow-sm transition-all flex items-center gap-1.5"
-                >
-                  <span className="material-symbols-outlined text-base">check</span>
-                  <span>Confirm My Commitment</span>
+                <button type="submit" className="btn-primary btn-sm">
+                  <span className="material-symbols-outlined text-[18px]">check</span>
+                  Confirm My Commitment
                 </button>
               </div>
             </form>

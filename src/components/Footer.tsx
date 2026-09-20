@@ -8,118 +8,116 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenPrayerModal }) => {
+  const scheduleCol1: [string, string][] = [
+    ['Daily Holy Qurbana', 'Mon–Fri 6:30 AM'],
+    ['Sunday Holy Qurbana', '7:00 & 9:30 AM'],
+    ['Perpetual Novena', 'Wed 5:30 PM & Sat 9:00 AM'],
+    ['Eucharistic Adoration', 'Thursdays 9 AM – 7 PM'],
+  ];
+  const scheduleCol2: [string, string][] = [
+    ['Daily Confession', '30 mins before Qurbana'],
+    ['Saturday Confession', '5:00 PM – 6:00 PM'],
+    ['Parish Office Hours', 'Mon–Sat 9 AM – 5 PM'],
+    ['Church Grounds', 'Open Daily 6 AM – 9 PM'],
+  ];
+
   return (
-    <footer className="w-full bg-[#006687] text-[#ffffff] border-t-2 border-[#67c7e8]/80">
-      <div className="w-full px-4 sm:px-6 lg:px-12 pt-10 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
-          {/* Col 1: Brand & Marian Motto */}
+    <footer id="parish-contact" className="scroll-mt-24 bg-maroon-950 text-ivory-200">
+      {/* Gold hairline */}
+      <div className="h-[3px] bg-gradient-to-r from-transparent via-gold-400 to-transparent" aria-hidden="true" />
+
+      <div className="container-site pb-8 pt-12 lg:pt-16">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-3">
               <img
-                alt="Sancta Maria Marian Shrine Logo"
-                className="h-10 w-auto object-contain brightness-0 invert"
+                alt="Lourde Matha Church Logo"
+                className="h-12 w-auto rounded-full object-contain ring-1 ring-gold-400/40"
                 src={SHRINE_LOGO}
               />
-              <div className="flex flex-col">
-                <span className="font-title-lg text-lg text-white font-semibold">Sancta Maria</span>
-                <span className="font-label-sm text-[11px] uppercase tracking-widest text-[#c1e8ff]">
-                  Marian Shrine &amp; Parish
+              <div className="flex flex-col leading-none">
+                <span className="font-serif text-xl font-semibold text-ivory-50">Lourde Matha Church</span>
+                <span className="mt-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-gold-300">
+                  Thalayanadu • Est. 1935
                 </span>
               </div>
             </div>
-            <p className="font-headline-sm text-base italic text-[#c1e8ff] font-normal leading-relaxed">
-              “A Place of Prayer, Hope &amp; Grace under the mantle of Our Lady of Grace”
+            <p className="serif-italic text-[1.05rem] leading-relaxed text-gold-200">
+              “A Place of Prayer, Hope &amp; Grace under the mantle of Our Lady of Lourdes”
             </p>
-            <p className="font-body-sm text-xs text-[#e8f6ff]/90 leading-relaxed">
+            <p className="t-small !text-ivory-200/70">
               Come lay your intentions before the Blessed Mother and partake in the holy mysteries of Christ.
             </p>
           </div>
 
-          {/* Col 2: Mass & Devotions */}
-          <div className="space-y-3">
-            <h3 className="font-title-md text-sm uppercase tracking-wider text-[#ffdf98] border-b border-white/15 pb-2 font-semibold">
-              Mass &amp; Devotions
+          {/* Mass & Devotions */}
+          <nav aria-label="Mass and devotions schedule">
+            <h3 className="mb-4 border-b border-ivory-100/15 pb-3 text-[13px] font-semibold uppercase tracking-[0.18em] text-gold-300">
+              Qurbana &amp; Devotions
             </h3>
-            <ul className="space-y-2 font-body-sm text-xs">
-              <li className="flex justify-between py-1 border-b border-white/5">
-                <span className="text-[#e8f6ff]">Daily Morning Mass</span>
-                <span className="font-medium text-white">6:30 AM &amp; 8:00 AM</span>
-              </li>
-              <li className="flex justify-between py-1 border-b border-white/5">
-                <span className="text-[#e8f6ff]">Sunday Solemn Mass</span>
-                <span className="font-medium text-white">8:00, 10:30 AM, 6:00 PM</span>
-              </li>
-              <li className="flex justify-between py-1 border-b border-white/5">
-                <span className="text-[#e8f6ff]">Perpetual Novena</span>
-                <span className="font-medium text-white">Wed 5:30 PM &amp; Sat 9:00 AM</span>
-              </li>
-              <li className="flex justify-between py-1 border-b border-white/5">
-                <span className="text-[#e8f6ff]">Eucharistic Adoration</span>
-                <span className="font-medium text-white">Thursdays 9 AM – 7 PM</span>
-              </li>
+            <ul className="space-y-1 text-[13px]">
+              {scheduleCol1.map(([label, time]) => (
+                <li key={label} className="flex items-baseline justify-between gap-3 border-b border-ivory-100/5 py-2">
+                  <span className="text-ivory-200/80">{label}</span>
+                  <span className="shrink-0 text-right font-semibold text-ivory-50">{time}</span>
+                </li>
+              ))}
             </ul>
-          </div>
+          </nav>
 
-          {/* Col 3: Reconciliation & Office */}
-          <div className="space-y-3">
-            <h3 className="font-title-md text-sm uppercase tracking-wider text-[#ffdf98] border-b border-white/15 pb-2 font-semibold">
+          {/* Reconciliation & Office */}
+          <nav aria-label="Reconciliation and office schedule">
+            <h3 className="mb-4 border-b border-ivory-100/15 pb-3 text-[13px] font-semibold uppercase tracking-[0.18em] text-gold-300">
               Reconciliation &amp; Office
             </h3>
-            <ul className="space-y-2 font-body-sm text-xs">
-              <li className="flex justify-between py-1 border-b border-white/5">
-                <span className="text-[#e8f6ff]">Daily Confession</span>
-                <span className="font-medium text-white">30 mins before Mass</span>
-              </li>
-              <li className="flex justify-between py-1 border-b border-white/5">
-                <span className="text-[#e8f6ff]">Saturday Confession</span>
-                <span className="font-medium text-white">4:00 PM – 5:30 PM</span>
-              </li>
-              <li className="flex justify-between py-1 border-b border-white/5">
-                <span className="text-[#e8f6ff]">Parish Office Hours</span>
-                <span className="font-medium text-white">Tue–Sat 9 AM – 4 PM</span>
-              </li>
-              <li className="flex justify-between py-1 border-b border-white/5">
-                <span className="text-[#e8f6ff]">Shrine Courtyard</span>
-                <span className="font-medium text-white">Open Daily 6 AM – 9 PM</span>
-              </li>
+            <ul className="space-y-1 text-[13px]">
+              {scheduleCol2.map(([label, time]) => (
+                <li key={label} className="flex items-baseline justify-between gap-3 border-b border-ivory-100/5 py-2">
+                  <span className="text-ivory-200/80">{label}</span>
+                  <span className="shrink-0 text-right font-semibold text-ivory-50">{time}</span>
+                </li>
+              ))}
             </ul>
-          </div>
+          </nav>
 
-          {/* Col 4: Sacred Pilgrimage */}
-          <div className="space-y-3">
-            <h3 className="font-title-md text-sm uppercase tracking-wider text-[#ffdf98] border-b border-white/15 pb-2 font-semibold">
+          {/* Contact */}
+          <div>
+            <h3 className="mb-4 border-b border-ivory-100/15 pb-3 text-[13px] font-semibold uppercase tracking-[0.18em] text-gold-300">
               Sacred Pilgrimage
             </h3>
-            <div className="space-y-2 font-body-sm text-xs text-[#e8f6ff]">
-              <p className="flex items-start gap-2">
-                <span className="material-symbols-outlined text-[18px] text-[#67c7e8] shrink-0 mt-0.5">location_on</span>
-                <span>108 Ave Maria Boulevard, Marian Sanctuary Hill</span>
+            <address className="space-y-2.5 text-[13px] not-italic text-ivory-200/85">
+              <p className="flex items-start gap-2.5">
+                <span className="material-symbols-outlined mt-0.5 shrink-0 text-[18px] text-gold-300">location_on</span>
+                <span>Kolapra – Thalayanadu Road, Thalayanadu P.O., Thodupuzha, Idukki, Kerala 685585</span>
               </p>
-              <p className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[18px] text-[#67c7e8] shrink-0">call</span>
-                <a href="tel:+18005556274" className="hover:text-white transition-colors">+1 (800) 555-MARIA</a>
+              <p className="flex items-center gap-2.5">
+                <span className="material-symbols-outlined shrink-0 text-[18px] text-gold-300">call</span>
+                <a href="tel:+914862258257" className="transition-colors hover:text-gold-200">+91 4862 258 257</a>
               </p>
-              <p className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[18px] text-[#67c7e8] shrink-0">mail</span>
-                <a href="mailto:office@sanctamaria-shrine.org" className="hover:text-white transition-colors">office@sanctamaria-shrine.org</a>
+              <p className="flex items-center gap-2.5">
+                <span className="material-symbols-outlined shrink-0 text-[18px] text-gold-300">mail</span>
+                <a href="mailto:lourdemathathalayanadu@gmail.com" className="break-all transition-colors hover:text-gold-200">
+                  lourdemathathalayanadu@gmail.com
+                </a>
               </p>
-            </div>
-            <div className="pt-2 flex flex-wrap gap-2">
+            </address>
+            <div className="mt-4 flex flex-wrap gap-2">
               <button
                 onClick={() => onNavigate('devotions-shrine')}
-                className="px-3 py-1 rounded-lg bg-[#c1e8ff]/20 hover:bg-[#67c7e8] hover:text-[#005266] text-white font-label-sm text-xs transition-colors"
+                className="cursor-pointer rounded-lg border border-ivory-100/20 px-3.5 py-1.5 text-[12px] font-semibold text-ivory-100 transition-colors hover:border-gold-400 hover:text-gold-200"
               >
                 Pilgrim Guide
               </button>
               <button
                 onClick={onOpenPrayerModal}
-                className="px-3 py-1 rounded-lg bg-[#c1e8ff]/20 hover:bg-[#67c7e8] hover:text-[#005266] text-white font-label-sm text-xs transition-colors"
+                className="cursor-pointer rounded-lg border border-ivory-100/20 px-3.5 py-1.5 text-[12px] font-semibold text-ivory-100 transition-colors hover:border-gold-400 hover:text-gold-200"
               >
                 Intentions
               </button>
               <button
                 onClick={() => onNavigate('offerings')}
-                className="px-3 py-1 rounded-lg bg-[#c1e8ff]/20 hover:bg-[#67c7e8] hover:text-[#005266] text-white font-label-sm text-xs transition-colors"
+                className="cursor-pointer rounded-lg border border-ivory-100/20 px-3.5 py-1.5 text-[12px] font-semibold text-ivory-100 transition-colors hover:border-gold-400 hover:text-gold-200"
               >
                 Donate
               </button>
@@ -127,13 +125,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenPrayerModal })
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-8 pt-4 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
-          <p className="font-body-sm text-xs text-[#e8f6ff]/80">
-            © 2026 Sancta Maria Marian Shrine &amp; Parish. All sacred rights reserved.
+        {/* Bottom bar */}
+        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-ivory-100/10 pt-6 text-center md:flex-row md:text-left">
+          <p className="text-[12px] text-ivory-200/60">
+            © 2026 Lourde Matha Church, Thalayanadu. All rights reserved.
           </p>
-          <p className="font-headline-sm text-sm text-[#ffdf98] italic font-normal tracking-wide">
-            Sub Tuum Praesidium Confugimus, Sancta Dei Genetrix
+          <p className="serif-italic text-[15px] tracking-wide text-gold-300">
+            Ad Jesum per Mariam
           </p>
         </div>
       </div>
