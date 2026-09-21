@@ -30,7 +30,14 @@ export default function App() {
   }, [activeTab]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#ffffff] text-[#071e28] selection:bg-[#67c7e8] selection:text-[#005266]">
+    <div className="flex min-h-screen flex-col bg-ivory-50 font-sans text-ink-900">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-maroon-700 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ivory-50"
+      >
+        Skip to main content
+      </a>
+
       {/* Liturgical Top Navigation */}
       <Header
         currentTab={activeTab}
@@ -39,7 +46,7 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className={`flex-1 w-full flex flex-col ${activeTab === 'home' ? '' : 'pt-28'}`}>
+      <main id="main-content" className={`flex w-full flex-1 flex-col ${activeTab === 'home' ? '' : 'pt-28'}`}>
         {activeTab === 'home' && (
           <HomeScreen
             onNavigate={(tab: NavigationTab) => setActiveTab(tab)}

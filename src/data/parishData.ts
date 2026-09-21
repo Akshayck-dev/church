@@ -1,6 +1,6 @@
 import { SacramentInfo } from '../types';
 
-export const SHRINE_LOGO = "https://lh3.googleusercontent.com/aida/AEtjO1XZ1yWqOVyLjrjg9Ss-ldtE31mJkn67_wI7HfcCAs3hyuoGe3fKiZDG6MSo5GGle2brbCcCj4ZjJR9qkhXUP-XjBmWLgALc_u_0FhX5Q25KsWvT0dn89yePdm7e2j4jehsxYWhNCeutrykaVvPlQOh_TshLpGVTNa_WQwiCadB6C51Ka2Oad5Zfnjl0edFvguzGs7r5dOGX5nsMvBYNeC-Qyq-9IkASjKwfmcwTOZFcCxu3bY2h_QxzNdbV";
+export const SHRINE_LOGO = "/lourde-matha-emblem.webp";
 
 export const IMAGES = {
   shrineAltarHero: "https://lh3.googleusercontent.com/aida-public/AB6AXuDX6yH2RshjmRK4wnzduOPIw3WjG3ylLlpxhnJ8GZ4xNKIuKUFDrF8ISG6MGIC0qKtuWy1BcVlpRE8GQEvW6JHBAWS4hpaeveMJETLP61sOgV6Oig-mRiTJHucvx-4H7ArFz7U2Tbx7SEV3yrlbGThr5ThcwQOivpBaOOGTJG3h7LaQvrNL3JWY6ddUty6E592cNU4P1fMeh_Fya1y_SIBDNk9gjflg4xkqvry3aeQF8IcqCQ1zFBzwTw",
@@ -66,7 +66,7 @@ export const SACRAMENTS_DATA: SacramentInfo[] = [
     points: [
       { icon: "groups", label: "Grade Level", detail: "3rd & 4th Grade children registered in Faith Formation." },
       { icon: "menu_book", label: "Formation", detail: "2-year preparation alongside First Reconciliation." },
-      { icon: "event", label: "Celebration", detail: "First Sunday of May at 10:30 AM Solemn Mass." }
+      { icon: "event", label: "Celebration", detail: "First Sunday of May at 9:30 AM Solemn Holy Qurbana." }
     ],
     ctaText: "Youth Catechesis Program",
     fullGuide: {
@@ -76,7 +76,7 @@ export const SACRAMENTS_DATA: SacramentInfo[] = [
         "Minimum 80% attendance in parish Sunday Religious Education classes",
         "Reception of the Sacrament of First Penance prior to First Communion"
       ],
-      schedule: "Celebrated annually on the First Sunday of May at 10:30 AM Solemn Choral High Mass."
+      schedule: "Celebrated annually on the First Sunday of May at 9:30 AM Solemn Holy Qurbana."
     }
   },
   {
@@ -88,7 +88,7 @@ export const SACRAMENTS_DATA: SacramentInfo[] = [
     points: [
       { icon: "person", label: "Candidates", detail: "8th/9th Grade youth or adult candidates in RCIA." },
       { icon: "volunteer_activism", label: "Service & Retreat", detail: "25 hours corporal mercy + Annual Emmaus Retreat." },
-      { icon: "award_star", label: "Conferred By", detail: "Auxiliary Bishop during the Eastertide visitation." }
+      { icon: "award_star", label: "Conferred By", detail: "Eparchial Bishop during the Eastertide visitation." }
     ],
     ctaText: "Confirmation Syllabus",
     fullGuide: {
@@ -108,15 +108,15 @@ export const SACRAMENTS_DATA: SacramentInfo[] = [
     icon: "favorite",
     shortDesc: "A sacred covenant mirroring Christ's spousal union with His Church, celebrated in our historic sanctuary.",
     points: [
-      { icon: "hourglass_top", label: "Advance Notice", detail: "Reserve Shrine sanctuary at least 6 months prior." },
-      { icon: "handshake", label: "Pre-Cana Course", detail: "Archdiocesan certified marriage preparation required." },
+      { icon: "hourglass_top", label: "Advance Notice", detail: "Reserve the church at least 6 months prior." },
+      { icon: "handshake", label: "Pre-Cana Course", detail: "Diocesan certified marriage preparation required." },
       { icon: "church", label: "Liturgical Coordinator", detail: "Dedicated on-site rehearsals & music guides." }
     ],
-    ctaText: "Shrine Wedding Guide & Booking",
+    ctaText: "Church Wedding Guide & Booking",
     fullGuide: {
       description: "A consecrated matrimonial bond sealed before the sanctuary altar under the special maternal intercession of Our Lady.",
       requirements: [
-        "Preliminary meeting with Fr. Vicar at least 6 months before date",
+        "Preliminary meeting with Fr. Sebastian at least 6 months before date",
         "Recent Baptismal certificates issued within 6 months with notations",
         "Certificate of completion from Catholic Pre-Cana / FOCCUS inventory"
       ],
@@ -130,9 +130,9 @@ export const SACRAMENTS_DATA: SacramentInfo[] = [
     icon: "vital_signs",
     shortDesc: "Comfort, holy oil anointing, and divine pardon for the sick, frail elderly, and those anticipating major surgery.",
     points: [
-      { icon: "calendar_view_week", label: "Shrine Healing Mass", detail: "1st Saturday of every month at 9:00 AM." },
+      { icon: "calendar_view_week", label: "Healing Mass", detail: "1st Saturday of every month at 9:00 AM." },
       { icon: "home_health", label: "Hospital Visits", detail: "Scheduled weekly visits to local regional infirmaries." },
-      { icon: "emergency", label: "Emergency Viaticum", detail: "Clergy on call day and night (+1 800 555-MARIA)." }
+      { icon: "emergency", label: "Emergency Viaticum", detail: "Clergy on call day and night (+91 4862 258 257)." }
     ],
     ctaText: "Request Pastoral Care Visit",
     fullGuide: {
@@ -152,9 +152,9 @@ export const SACRAMENTS_DATA: SacramentInfo[] = [
     icon: "lock_reset",
     shortDesc: "Restoration into divine friendship through sincere repentance, sacramental absolution, and spiritual counsel.",
     points: [
-      { icon: "today", label: "Daily", detail: "30 minutes before each morning Holy Mass." },
-      { icon: "event_repeat", label: "Saturdays", detail: "4:00 PM – 5:30 PM (in the North Confessionals)." },
-      { icon: "lock_clock", label: "By Appointment", detail: "Private appointments with Father Vicar anytime." }
+      { icon: "today", label: "Daily", detail: "30 minutes before each Holy Qurbana." },
+      { icon: "event_repeat", label: "Saturdays", detail: "5:00 PM – 6:00 PM (in the church confessionals)." },
+      { icon: "lock_clock", label: "By Appointment", detail: "Private appointments with the Vicar anytime." }
     ],
     ctaText: "Examination of Conscience Guide",
     fullGuide: {
@@ -164,7 +164,7 @@ export const SACRAMENTS_DATA: SacramentInfo[] = [
         "Confession of sins to an ordained priest in face-to-face or anonymous screen",
         "Fulfillment of assigned prayer penance and purpose of amendment"
       ],
-      schedule: "Daily 30 minutes before 6:30 AM & 6:00 PM Masses; Saturdays 4:00 PM – 5:30 PM."
+      schedule: "Daily 30 minutes before 6:30 AM Holy Qurbana; Saturdays 5:00 PM – 6:00 PM."
     }
   },
   {
@@ -193,33 +193,33 @@ export const SACRAMENTS_DATA: SacramentInfo[] = [
 
 export const PARISH_EVENTS = [
   {
-    id: "feast-nativity",
-    title: "Solemn Feast of the Nativity of the Blessed Virgin Mary",
-    date: "September 8 – 16, 2026",
-    time: "6:00 PM Daily Novena & Mass",
-    location: "Main Sanctuary & Shrine Grounds",
+    id: "feast-perunnal",
+    title: "Annual Feast (Perunnal) of Our Lady of Lourdes & St. Sebastian",
+    date: "February 10 – 11, 2027",
+    time: "7:00 AM Festal Holy Qurbana • 6:30 PM Procession",
+    location: "Church & Parish Grounds",
     category: "liturgy",
-    description: "Nine days of solemn Novena liturgies culminating in the grand candlelight Eucharistic procession, blessing of children, and festive agape.",
+    description: "Two days of solemn feast celebrations: festal Holy Qurbana, candlelight Marian procession, and parish agape.",
     image: IMAGES.feastCandlelightProcession
   },
   {
-    id: "communion-catechesis",
-    title: "First Holy Communion & Confirmation Enrollment",
+    id: "catechism-enrollment",
+    title: "Catechism Enrollment 2026–27",
     date: "September 20, 2026",
-    time: "9:30 AM (After 8:00 AM Family Mass)",
-    location: "St. John Paul II Parish Hall",
+    time: "9:30 AM (After 7:00 AM Holy Qurbana)",
+    location: "Parish Hall",
     category: "formation",
-    description: "Orientation for parents and candidates beginning the 2026-2027 religious education year.",
+    description: "Orientation for parents and students beginning the 2026–2027 catechism year.",
     image: IMAGES.firstCommunionJoy
   },
   {
     id: "youth-medical-camp",
-    title: "Marian Youth Pilgrimage & Mercy Medical Camp",
+    title: "Parish Youth (KCYM) Medical Camp",
     date: "October 5, 2026",
     time: "8:00 AM – 3:00 PM",
-    location: "Sanctuary Courtyard Pavilion",
+    location: "Parish Grounds",
     category: "charity",
-    description: "Free medical, pediatric, and geriatric checkups for underprivileged families organized by our parish youth guild.",
+    description: "Free medical checkups for underprivileged families organized by the KCYM youth.",
     image: IMAGES.medicalCharityCamp
   },
   {
@@ -227,29 +227,29 @@ export const PARISH_EVENTS = [
     title: "Confraternity of the Holy Rosary Monthly Vigil",
     date: "First Friday Monthly",
     time: "7:00 PM – 10:00 PM",
-    location: "Outdoor Grotto of Grace",
+    location: "Lourdes Grotto",
     category: "community",
     description: "Full 20-decade Scriptural Rosary chanted outdoors by candlelight with Eucharistic adoration.",
     image: IMAGES.grottoOurLadyOfGrace
   },
   {
     id: "food-drive",
-    title: "St. Vincent de Paul Fall Harvest Food Drive",
+    title: "St. Vincent de Paul Food Drive",
     date: "October 18 – 25, 2026",
-    time: "All Weekend Masses",
-    location: "Parish Narthex Drop-off",
+    time: "After Weekend Holy Qurbanas",
+    location: "Church Entrance",
     category: "charity",
-    description: "Collecting non-perishable pantry items, canned goods, and holiday meal baskets for 300+ local families.",
+    description: "Collecting non-perishable food items and daily essentials for families in need.",
     image: IMAGES.gallerySoupKitchen
   },
   {
     id: "choir-auditions",
-    title: "Sancta Maria Polyphonic Choir Open Auditions",
+    title: "Lourde Matha Choir Open Auditions",
     date: "November 15, 2026",
     time: "1:00 PM – 3:30 PM",
-    location: "Upper Choir Loft",
+    location: "Choir Loft",
     category: "liturgy",
-    description: "Seeking soprano, alto, tenor, and bass voices for Advent, Christmas Midnight Mass, and Gregorian chant.",
+    description: "Seeking soprano, alto, tenor, and bass voices for the Christmas liturgies and feast day choirs.",
     image: IMAGES.galleryChoirLoft
   }
 ];
@@ -283,9 +283,9 @@ export const BULLETINS = [
 
 export const GALLERY_PHOTOS = [
   { id: "p1", caption: "Solemn Candlelight Procession", src: IMAGES.feastCandlelightProcession },
-  { id: "p2", caption: "Altar of Our Lady of Grace", src: IMAGES.shrineAltarHero },
+  { id: "p2", caption: "Altar of Our Lady of Lourdes", src: IMAGES.shrineAltarHero },
   { id: "p3", caption: "First Communicants in White", src: IMAGES.firstCommunionJoy },
-  { id: "p4", caption: "Polyphonic Choir & Pipe Organ", src: IMAGES.galleryChoirLoft },
-  { id: "p5", caption: "Charity Soup Kitchen & Food Bank", src: IMAGES.gallerySoupKitchen },
-  { id: "p6", caption: "Fr. Joseph Blessing Pilgrims", src: IMAGES.galleryVicarGreeting }
+  { id: "p4", caption: "Parish Choir", src: IMAGES.galleryChoirLoft },
+  { id: "p5", caption: "Charity Food Distribution", src: IMAGES.gallerySoupKitchen },
+  { id: "p6", caption: "Blessing of Parishioners", src: IMAGES.galleryVicarGreeting }
 ];

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavigationTab, SacramentInfo } from '../types';
 import { SACRAMENTS_DATA, IMAGES } from '../data/parishData';
+import { Reveal, PageHero, SectionHeading, DividerCross } from '../components/ui';
 
 interface SacramentsScreenProps {
   onNavigate: (tab: NavigationTab) => void;
@@ -8,7 +9,6 @@ interface SacramentsScreenProps {
 }
 
 export const SacramentsScreen: React.FC<SacramentsScreenProps> = ({
-  onNavigate,
   onSelectSacrament,
 }) => {
   const [consultantName, setConsultantName] = useState('');
@@ -35,430 +35,305 @@ export const SacramentsScreen: React.FC<SacramentsScreenProps> = ({
     alert(`Downloading ${docName}. The PDF has been initiated.`);
   };
 
+  const docDownloads = [
+    { title: 'Infant Baptism Form', size: 'PDF (240 KB)', file: 'Infant_Baptism_Form_2026.pdf' },
+    { title: 'Wedding Guidelines Packet', size: 'PDF (1.2 MB)', file: 'Holy_Matrimony_Guidelines_2026.pdf' },
+    { title: 'Godparent / Sponsor Affidavit', size: 'PDF (180 KB)', file: 'Sponsor_Eligibility_Affidavit.pdf' },
+    { title: 'Sacramental Record Request', size: 'PDF (150 KB)', file: 'Sacramental_Record_Request.pdf' },
+  ];
+
   return (
-    <div className="flex flex-col w-full font-body-md text-[#071e28]">
-      {/* Top Breadcrumb & Hero Header */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#e8f6ff] via-[#f4faff] to-[#ffffff] px-4 sm:px-6 lg:px-12 pt-8 pb-12">
-        <div className="max-w-7xl mx-auto space-y-4">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#dbf1ff] text-[#006780] font-label-sm text-[11px] uppercase tracking-widest font-semibold">
-              <span className="material-symbols-outlined text-[15px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-                local_library
-              </span>
-              Pastoral Care &amp; Liturgical Life
-            </span>
-            <span className="text-[#bec8cd] font-label-md">•</span>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#ffdf98]/40 text-[#5e4706] font-label-sm text-[11px] font-semibold">
-              <span className="material-symbols-outlined text-[14px]">auto_awesome</span>
-              Seven Sacred Vessels of Grace
-            </span>
-          </div>
+    <div className="flex w-full flex-col">
+      <PageHero
+        eyebrow="Pastoral Care & Liturgical Life"
+        badge="Seven Sacred Vessels of Grace"
+        kicker="Sanctifying Life from Birth to Eternity"
+        title="Vessels of Divine Mercy & Parish Pastoral Care"
+        description="“An outward sign instituted by Christ to give grace.” The Seven Sacraments touch all the stages and all the important moments of Christian life: they give birth and increase, healing and mission to the Christian's life of faith. Explore guidelines, scheduling, and pastoral preparation."
+        image={IMAGES.mainMarianSanctuary}
+        imageAlt="Priest administering the Holy Eucharist during Solemn Mass"
+        imageCaption="The Holy Mysteries"
+        imageCaptionSub="Celebrated Daily in the Syro-Malabar Rite"
+      />
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-7 space-y-3">
-              <span className="font-label-md text-xs uppercase tracking-[0.2em] text-[#006687] font-semibold">
-                Sanctifying Life from Birth to Eternity
-              </span>
-              <h1 className="font-headline-lg lg:font-display-lg text-3xl sm:text-4xl lg:text-[48px] text-[#071e28] font-serif font-semibold leading-tight">
-                Vessels of Divine Mercy &amp; Parish Pastoral Care
-              </h1>
-              <p className="font-headline-sm text-base sm:text-lg italic text-[#006687] font-serif leading-relaxed">
-                “An outward sign instituted by Christ to give grace.”
-              </p>
-              <p className="font-body-lg text-sm sm:text-base text-[#3e484d] max-w-2xl leading-relaxed">
-                The Seven Sacraments touch all the stages and all the important moments of Christian life: they give birth and increase, healing and mission to the Christian’s life of faith. Explore guidelines, scheduling, and pastoral preparation.
-              </p>
-            </div>
-
-            <div className="lg:col-span-5">
-              <div className="relative rounded-2xl overflow-hidden shadow-lg aspect-[16/10] bg-[#c7ddeb] border border-[#dbf1ff]">
-                <img
-                  alt="Priest administering the Holy Eucharist during Solemn Mass"
-                  className="w-full h-full object-cover"
-                  src={IMAGES.mainMarianSanctuary}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1e333e]/80 via-transparent to-transparent flex flex-col justify-end p-5 text-white">
-                  <span className="font-label-sm text-xs text-[#ffdf98] uppercase tracking-wider font-semibold">
-                    The Holy Mysteries
-                  </span>
-                  <p className="font-title-md text-sm text-white font-serif">
-                    Celebrated Daily in Accordance with the Roman Rite
+      {/* Emergency sacramental callout */}
+      <section className="bg-ivory-50" aria-label="Urgent sacramental anointing">
+        <div className="container-site py-8 lg:py-10">
+          <Reveal>
+            <div className="flex flex-col items-center justify-between gap-5 rounded-2xl bg-maroon-800 p-5 text-ivory-50 shadow-soft sm:p-6 md:flex-row">
+              <div className="flex items-center gap-4 text-center md:text-left">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-ivory-50/15 text-gold-300">
+                  <span className="material-symbols-outlined text-[26px]">medical_services</span>
+                </span>
+                <div>
+                  <h2 className="text-[1.05rem] font-bold text-ivory-50">Urgent Sacramental Anointing (Viaticum)</h2>
+                  <p className="mt-0.5 text-[13px] leading-relaxed text-ivory-200/85">
+                    For parishioners in imminent danger of death or facing emergency surgery, our priests are available 24/7.
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Emergency Sacramental Callout Bar */}
-      <section className="w-full px-4 sm:px-6 lg:px-12 -mt-4 mb-6 z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#ba1a1a] to-[#93000a] text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3.5 text-center md:text-left">
-              <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-2xl">medical_services</span>
-              </div>
-              <div>
-                <h3 className="font-title-md text-sm sm:text-base font-bold text-[#ffdad6]">
-                  Urgent Sacramental Anointing (Viaticum)
-                </h3>
-                <p className="font-body-sm text-xs sm:text-sm text-white/90">
-                  For parishioners in imminent danger of death or facing emergency surgery, our priests are available 24/7.
-                </p>
-              </div>
-            </div>
-            <div className="shrink-0 flex items-center gap-2">
-              <a
-                href="tel:+18005556274"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-[#93000a] font-label-md text-xs sm:text-sm font-bold shadow-md hover:bg-[#ffdad6] transition-colors"
-              >
-                <span className="material-symbols-outlined text-[18px]">call</span>
-                <span>Call Hotline: +1 (800) 555-6274 (Press 1)</span>
+              <a href="tel:+914862258257" className="btn-gold shrink-0">
+                <span className="material-symbols-outlined text-[20px]">call</span>
+                Call Hotline: +91 4862 258 257 (Press 1)
               </a>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* The Seven Liturgical Vessels */}
-      <section className="w-full px-4 sm:px-6 lg:px-12 py-10 bg-[#ffffff]">
-        <div className="max-w-7xl mx-auto space-y-8">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="font-label-md text-xs uppercase tracking-widest text-[#006780] font-semibold">
-              Sacramental Directory
-            </span>
-            <h2 className="font-headline-lg text-2xl sm:text-3xl text-[#071e28] font-serif font-semibold">
-              The Seven Sacraments of the Church
-            </h2>
-            <p className="font-body-md text-xs sm:text-sm text-[#3e484d]">
-              Select any Sacrament to view pastoral prerequisites, required documentation, preparation classes, and schedule requests.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {SACRAMENTS_DATA.map((sacrament) => (
-              <div
-                key={sacrament.key}
-                className="p-6 rounded-2xl bg-[#ffffff] shadow-xs hover:shadow-md transition-all flex flex-col justify-between border border-[#dbf1ff] group"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-xl bg-[#dbf1ff] text-[#006780] group-hover:bg-[#67c7e8] group-hover:text-[#005266] flex items-center justify-center transition-colors">
-                      <span className="material-symbols-outlined text-[28px]">{sacrament.icon}</span>
+      {/* The seven sacraments */}
+      <section className="bg-white" aria-label="Sacramental directory">
+        <div className="container-site py-12 lg:py-16">
+          <SectionHeading
+            eyebrow="Sacramental Directory"
+            title="The Seven Sacraments of the Church"
+            description="Select any Sacrament to view pastoral prerequisites, required documentation, preparation classes, and schedule requests."
+          />
+          <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {SACRAMENTS_DATA.map((sacrament, i) => (
+              <Reveal key={sacrament.key} delay={(i % 3) * 80} className="h-full">
+                <article className="card card-hover flex h-full flex-col p-6">
+                  <div className="flex-1 space-y-3.5">
+                    <div className="flex items-center justify-between">
+                      <span className="icon-tile">
+                        <span className="material-symbols-outlined text-[26px]">{sacrament.icon}</span>
+                      </span>
+                      <span className="rounded-full bg-ivory-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-maroon-600">
+                        {sacrament.category}
+                      </span>
                     </div>
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#e8f6ff] text-[#006687] font-label-sm text-[10px] uppercase font-bold tracking-wider">
-                      {sacrament.category}
-                    </span>
-                  </div>
-
-                  <div>
-                    <span className="font-label-sm text-[11px] uppercase tracking-wider text-[#745b1b] font-semibold block">
-                      {sacrament.category}
-                    </span>
-                    <h3 className="font-title-lg text-lg text-[#071e28] font-bold mt-0.5">
-                      {sacrament.title}
-                    </h3>
-                  </div>
-
-                  <p className="font-body-sm text-xs text-[#3e484d] leading-relaxed">
-                    {sacrament.shortDesc}
-                  </p>
-
-                  <div className="p-3 rounded-xl bg-[#e8f6ff] text-xs space-y-1">
-                    <div className="flex justify-between">
-                      <span className="text-[#6e797d]">Schedule:</span>
-                      <span className="font-semibold text-[#071e28] text-right">{sacrament.fullGuide.schedule}</span>
+                    <div>
+                      <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-gold-600">{sacrament.category}</p>
+                      <h3 className="t-h3 mt-1 text-ink-950">{sacrament.title}</h3>
+                    </div>
+                    <p className="t-small">{sacrament.shortDesc}</p>
+                    <div className="rounded-xl bg-ivory-100 p-3.5">
+                      <div className="flex justify-between gap-3 text-[12px]">
+                        <span className="shrink-0 font-semibold text-ink-500">Schedule:</span>
+                        <span className="text-right font-semibold text-ink-900">{sacrament.fullGuide.schedule}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-
-                <div className="mt-5 pt-3 border-t border-[#dbf1ff]">
-                  <button
-                    onClick={() => onSelectSacrament(sacrament)}
-                    className="w-full py-2.5 px-4 rounded-xl bg-[#dbf1ff] hover:bg-[#006780] text-[#006780] hover:text-white font-label-md text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
-                  >
-                    <span>View Guidelines &amp; Requirements</span>
-                    <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
-                  </button>
-                </div>
-              </div>
+                  <div className="mt-5 border-t border-line-soft pt-4">
+                    <button
+                      onClick={() => onSelectSacrament(sacrament)}
+                      className="btn-outline btn-sm w-full"
+                    >
+                      View Guidelines &amp; Requirements
+                      <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                    </button>
+                  </div>
+                </article>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* RCIA / OCIA Spotlight Banner */}
-      <section className="w-full px-4 sm:px-6 lg:px-12 py-12 bg-[#e8f6ff]">
-        <div className="max-w-7xl mx-auto">
-          <div className="p-8 sm:p-10 rounded-3xl bg-[#ffffff] shadow-md border border-[#dbf1ff]">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-8 space-y-3">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#dbf1ff] text-[#006780] font-label-sm text-xs uppercase tracking-wider font-semibold">
-                  <span className="material-symbols-outlined text-[16px]">explore</span>
-                  Adult Faith Journey
-                </span>
-                <h2 className="font-headline-lg text-2xl sm:text-3xl text-[#071e28] font-serif font-semibold">
-                  Are You Seeking the Catholic Faith? (OCIA / RCIA)
-                </h2>
-                <p className="font-body-md text-xs sm:text-sm text-[#3e484d] leading-relaxed">
-                  The Order of Christian Initiation for Adults is a welcoming spiritual pathway for unbaptized adults, as well as baptized Christians of other traditions seeking full communion with the Catholic Church. Classes meet weekly on Thursday evenings.
-                </p>
-                <div className="pt-2 flex flex-wrap gap-3">
-                  <button
-                    onClick={() => alert("RCIA inquiry form opened. Classes begin September 2026.")}
-                    className="px-6 py-2.5 rounded-xl bg-[#006780] hover:bg-[#006687] text-white font-label-md text-xs sm:text-sm font-semibold transition-colors shadow-xs cursor-pointer"
-                  >
-                    Enroll in RCIA 2026
-                  </button>
-                  <button
-                    onClick={() => alert("Please email rcia@sanctamaria-shrine.org to speak with the RCIA coordinator.")}
-                    className="px-5 py-2.5 rounded-xl bg-[#dbf1ff] text-[#006780] hover:bg-[#d5ecfa] font-label-md text-xs sm:text-sm font-semibold transition-colors cursor-pointer"
-                  >
-                    Schedule Inquiry Conversation
-                  </button>
+      <div className="bg-ivory-50 pt-2">
+        <DividerCross />
+      </div>
+
+      {/* RCIA / OCIA spotlight */}
+      <section className="bg-ivory-50" aria-label="RCIA and OCIA">
+        <div className="container-site py-12 lg:py-16">
+          <Reveal>
+            <div className="card overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-12">
+                <div className="p-7 sm:p-10 lg:col-span-8">
+                  <span className="eyebrow">Adult Faith Journey</span>
+                  <h2 className="t-h2 mt-3 text-balance text-ink-950">Are You Seeking the Catholic Faith? (OCIA / RCIA)</h2>
+                  <p className="t-body mt-4">
+                    The Order of Christian Initiation for Adults is a welcoming spiritual pathway for unbaptized adults, as well as baptized Christians of other traditions seeking full communion with the Catholic Church. Classes meet weekly on Thursday evenings.
+                  </p>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <button
+                      onClick={() => alert("RCIA inquiry form opened. Classes begin September 2026.")}
+                      className="btn-primary"
+                    >
+                      Enroll in RCIA 2026
+                    </button>
+                    <button
+                      onClick={() => alert("Please email lourdemathathalayanadu@gmail.com to speak with the RCIA coordinator.")}
+                      className="btn-outline"
+                    >
+                      Schedule Inquiry Conversation
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div className="lg:col-span-4 flex flex-col gap-3 p-5 rounded-2xl bg-[#e8f6ff] text-xs border border-[#dbf1ff]">
-                <div className="flex items-center gap-2 font-bold text-[#071e28]">
-                  <span className="material-symbols-outlined text-[#006780]">verified_user</span>
-                  <span>RCIA Highlights</span>
+                <div className="flex flex-col justify-center gap-3 border-t border-line-soft bg-ivory-100 p-7 sm:p-10 lg:col-span-4 lg:border-l lg:border-t-0">
+                  <p className="inline-flex items-center gap-2 font-bold text-ink-950">
+                    <span className="material-symbols-outlined text-[20px] text-maroon-600">verified_user</span>
+                    RCIA Highlights
+                  </p>
+                  <ul className="t-small list-disc space-y-1.5 pl-5">
+                    <li>No pressure or obligation to join</li>
+                    <li>Personal mentor/sponsor provided</li>
+                    <li>Sacraments received at Easter Vigil Mass</li>
+                  </ul>
                 </div>
-                <p className="text-[#3e484d]">
-                  • No pressure or obligation to join<br />
-                  • Personal mentor/sponsor provided<br />
-                  • Sacraments received at Easter Vigil Mass
-                </p>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* Pastoral Forms & Documents Downloads */}
-      <section className="w-full px-4 sm:px-6 lg:px-12 py-12 bg-[#ffffff]">
-        <div className="max-w-7xl mx-auto space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+      {/* Pastoral forms & document downloads */}
+      <section className="bg-white" aria-label="Pastoral forms and documents">
+        <div className="container-site py-12 lg:py-16">
+          <Reveal className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <span className="font-label-md text-xs uppercase tracking-widest text-[#006780] font-semibold block">
-                Official Forms
-              </span>
-              <h2 className="font-headline-lg text-2xl sm:text-3xl text-[#071e28] font-serif font-semibold">
-                Pastoral Office &amp; Sacramental Records
-              </h2>
+              <span className="eyebrow">Official Forms</span>
+              <h2 className="t-h2 mt-3 text-ink-950">Pastoral Office &amp; Sacramental Records</h2>
             </div>
-            <p className="font-body-sm text-xs text-[#3e484d] max-w-sm">
+            <p className="t-small max-w-sm">
               Need certified baptismal certificates, wedding checklists, or godparent affidavits? Download printable PDFs below.
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-4 rounded-xl bg-[#e8f6ff] flex items-center justify-between border border-[#dbf1ff]">
-              <div className="space-y-1">
-                <span className="font-title-md text-xs sm:text-sm text-[#071e28] font-bold block">
-                  Infant Baptism Form
-                </span>
-                <span className="text-[11px] text-[#6e797d]">PDF (240 KB)</span>
-              </div>
-              <button
-                onClick={() => handleDownloadDoc('Infant_Baptism_Form_2026.pdf')}
-                className="p-2 rounded-lg bg-white text-[#006780] hover:bg-[#67c7e8] hover:text-[#005266] transition-colors shadow-2xs cursor-pointer"
-              >
-                <span className="material-symbols-outlined text-lg">download</span>
-              </button>
-            </div>
-
-            <div className="p-4 rounded-xl bg-[#e8f6ff] flex items-center justify-between border border-[#dbf1ff]">
-              <div className="space-y-1">
-                <span className="font-title-md text-xs sm:text-sm text-[#071e28] font-bold block">
-                  Wedding Guidelines Packet
-                </span>
-                <span className="text-[11px] text-[#6e797d]">PDF (1.2 MB)</span>
-              </div>
-              <button
-                onClick={() => handleDownloadDoc('Holy_Matrimony_Guidelines_2026.pdf')}
-                className="p-2 rounded-lg bg-white text-[#006780] hover:bg-[#67c7e8] hover:text-[#005266] transition-colors shadow-2xs cursor-pointer"
-              >
-                <span className="material-symbols-outlined text-lg">download</span>
-              </button>
-            </div>
-
-            <div className="p-4 rounded-xl bg-[#e8f6ff] flex items-center justify-between border border-[#dbf1ff]">
-              <div className="space-y-1">
-                <span className="font-title-md text-xs sm:text-sm text-[#071e28] font-bold block">
-                  Godparent / Sponsor Affidavit
-                </span>
-                <span className="text-[11px] text-[#6e797d]">PDF (180 KB)</span>
-              </div>
-              <button
-                onClick={() => handleDownloadDoc('Sponsor_Eligibility_Affidavit.pdf')}
-                className="p-2 rounded-lg bg-white text-[#006780] hover:bg-[#67c7e8] hover:text-[#005266] transition-colors shadow-2xs cursor-pointer"
-              >
-                <span className="material-symbols-outlined text-lg">download</span>
-              </button>
-            </div>
-
-            <div className="p-4 rounded-xl bg-[#e8f6ff] flex items-center justify-between border border-[#dbf1ff]">
-              <div className="space-y-1">
-                <span className="font-title-md text-xs sm:text-sm text-[#071e28] font-bold block">
-                  Sacramental Record Request
-                </span>
-                <span className="text-[11px] text-[#6e797d]">PDF (150 KB)</span>
-              </div>
-              <button
-                onClick={() => handleDownloadDoc('Sacramental_Record_Request.pdf')}
-                className="p-2 rounded-lg bg-white text-[#006780] hover:bg-[#67c7e8] hover:text-[#005266] transition-colors shadow-2xs cursor-pointer"
-              >
-                <span className="material-symbols-outlined text-lg">download</span>
-              </button>
-            </div>
+          </Reveal>
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {docDownloads.map((doc, i) => (
+              <Reveal key={doc.title} delay={i * 70} className="h-full">
+                <div className="card card-hover flex h-full items-center justify-between gap-3 p-5">
+                  <div>
+                    <h3 className="text-[14px] font-bold text-ink-950">{doc.title}</h3>
+                    <p className="mt-1 text-[12px] text-ink-500">{doc.size}</p>
+                  </div>
+                  <button
+                    onClick={() => handleDownloadDoc(doc.file)}
+                    aria-label={`Download ${doc.title}`}
+                    className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-lg bg-ivory-100 text-maroon-700 transition-colors hover:bg-maroon-600 hover:text-ivory-50"
+                  >
+                    <span className="material-symbols-outlined text-[20px]">download</span>
+                  </button>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Pastoral Consultation Booking Form */}
-      <section className="w-full px-4 sm:px-6 lg:px-12 py-14 bg-[#e8f6ff]" id="consultation">
-        <div className="max-w-7xl mx-auto">
-          <div className="bg-[#ffffff] rounded-3xl p-6 sm:p-10 shadow-lg border border-[#dbf1ff]">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-5 space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#dbf1ff] text-[#006780] font-label-sm text-xs uppercase font-semibold">
-                  <span className="material-symbols-outlined text-sm">support_agent</span>
-                  <span>Personal Meeting with Clergy</span>
-                </div>
-                <h2 className="font-headline-lg text-2xl sm:text-3xl text-[#071e28] font-serif font-semibold">
-                  Arrange a Pastoral Consultation
-                </h2>
-                <p className="font-body-md text-xs sm:text-sm text-[#3e484d] leading-relaxed">
-                  Our priests are here to accompany you through moments of spiritual uncertainty, grief, marital discernment, or family crises. Request a private pastoral meeting with Fr. Joseph Mathew or associate priests.
-                </p>
-
-                <div className="p-4 rounded-2xl bg-[#e8f6ff] space-y-2 text-xs border border-[#dbf1ff]">
-                  <div className="flex items-center gap-2 text-[#006780] font-bold">
-                    <span className="material-symbols-outlined text-[18px]">lock</span>
-                    <span>Absolute Sacramental Confidentiality</span>
-                  </div>
-                  <p className="text-[#3e484d]">
-                    Every consultation is protected by canonical confidentiality and held in the quiet Pastoral Parlor.
+      {/* Pastoral consultation booking */}
+      <section className="scroll-mt-28 bg-ivory-50" id="consultation" aria-label="Arrange a pastoral consultation">
+        <div className="container-site py-12 lg:py-16">
+          <Reveal>
+            <div className="card overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-12">
+                <div className="bg-maroon-900 p-7 text-ivory-100 sm:p-10 lg:col-span-5">
+                  <span className="eyebrow eyebrow-on-dark">Personal Meeting with Clergy</span>
+                  <h2 className="t-h2 mt-3 text-balance text-ivory-50">Arrange a Pastoral Consultation</h2>
+                  <p className="mt-4 text-[14px] leading-relaxed text-ivory-200/85">
+                    Our priests are here to accompany you through moments of spiritual uncertainty, grief, marital discernment, or family crises. Request a private pastoral meeting with Fr. Sebastian Thumbamattam.
                   </p>
-                </div>
-              </div>
-
-              {/* Consultation Booking Form */}
-              <div className="lg:col-span-7 bg-[#e8f6ff] p-6 sm:p-8 rounded-2xl border border-[#dbf1ff]">
-                {consultSuccess ? (
-                  <div className="p-6 rounded-2xl bg-white border border-[#dbf1ff] text-center space-y-2">
-                    <div className="w-12 h-12 rounded-full bg-[#67c7e8]/30 text-[#006780] flex items-center justify-center mx-auto">
-                      <span className="material-symbols-outlined text-2xl">event_available</span>
-                    </div>
-                    <h4 className="font-title-md text-base text-[#006780] font-bold">Consultation Requested</h4>
-                    <p className="font-body-sm text-xs text-[#3e484d]">
-                      The Parish Secretary will review your request and confirm your appointment with Father within 24 hours.
+                  <div className="mt-6 rounded-2xl bg-maroon-950/50 p-5 ring-1 ring-ivory-100/15">
+                    <p className="inline-flex items-center gap-2 font-bold text-ivory-50">
+                      <span className="material-symbols-outlined text-[20px] text-gold-300">lock</span>
+                      Absolute Sacramental Confidentiality
+                    </p>
+                    <p className="mt-1.5 text-[13px] leading-relaxed text-ivory-200/80">
+                      Every consultation is protected by canonical confidentiality and held in the quiet Pastoral Parlor.
                     </p>
                   </div>
-                ) : (
-                  <form className="space-y-3.5" onSubmit={handleConsultSubmit}>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div>
-                        <label className="block font-label-sm text-xs uppercase tracking-wider text-[#3e484d] mb-1 font-semibold">
-                          Your Full Name *
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          value={consultantName}
-                          onChange={(e) => setConsultantName(e.target.value)}
-                          placeholder="e.g. John Peter"
-                          className="w-full bg-[#ffffff] px-3.5 py-2.5 rounded-xl font-body-sm text-xs sm:text-sm text-[#071e28] focus:outline-none focus:ring-2 focus:ring-[#67c7e8] border border-[#dbf1ff]"
-                        />
+                </div>
+                <div className="bg-ivory-100 p-6 sm:p-8 lg:col-span-7">
+                  {consultSuccess ? (
+                    <div className="flex h-full min-h-[320px] flex-col items-center justify-center rounded-2xl border border-line bg-white p-8 text-center" role="status">
+                      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-maroon-600/10 text-maroon-700">
+                        <span className="material-symbols-outlined text-3xl">event_available</span>
+                      </span>
+                      <h3 className="mt-3 text-[16px] font-bold text-maroon-700">Consultation Requested</h3>
+                      <p className="t-small mt-1.5 max-w-sm">
+                        The Parish Secretary will review your request and confirm your appointment with Father within 24 hours.
+                      </p>
+                    </div>
+                  ) : (
+                    <form className="space-y-4" onSubmit={handleConsultSubmit}>
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div>
+                          <label className="label" htmlFor="consult-name">Your Full Name *</label>
+                          <input
+                            id="consult-name"
+                            type="text"
+                            required
+                            value={consultantName}
+                            onChange={(e) => setConsultantName(e.target.value)}
+                            placeholder="e.g. John Peter"
+                            className="input !bg-white"
+                          />
+                        </div>
+                        <div>
+                          <label className="label" htmlFor="consult-email">Email Address *</label>
+                          <input
+                            id="consult-email"
+                            type="email"
+                            required
+                            value={consultantEmail}
+                            onChange={(e) => setConsultantEmail(e.target.value)}
+                            placeholder="name@example.com"
+                            className="input !bg-white"
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div>
+                          <label className="label" htmlFor="consult-phone">Phone Number *</label>
+                          <input
+                            id="consult-phone"
+                            type="tel"
+                            required
+                            value={consultantPhone}
+                            onChange={(e) => setConsultantPhone(e.target.value)}
+                            placeholder="+91 98XXX XXXXX"
+                            className="input !bg-white"
+                          />
+                        </div>
+                        <div>
+                          <label className="label" htmlFor="consult-date">Preferred Date</label>
+                          <input
+                            id="consult-date"
+                            type="date"
+                            value={consultantDate}
+                            onChange={(e) => setConsultantDate(e.target.value)}
+                            className="input !bg-white"
+                          />
+                        </div>
                       </div>
                       <div>
-                        <label className="block font-label-sm text-xs uppercase tracking-wider text-[#3e484d] mb-1 font-semibold">
-                          Email Address *
-                        </label>
-                        <input
-                          type="email"
-                          required
-                          value={consultantEmail}
-                          onChange={(e) => setConsultantEmail(e.target.value)}
-                          placeholder="name@example.com"
-                          className="w-full bg-[#ffffff] px-3.5 py-2.5 rounded-xl font-body-sm text-xs sm:text-sm text-[#071e28] focus:outline-none focus:ring-2 focus:ring-[#67c7e8] border border-[#dbf1ff]"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div>
-                        <label className="block font-label-sm text-xs uppercase tracking-wider text-[#3e484d] mb-1 font-semibold">
-                          Phone Number *
-                        </label>
-                        <input
-                          type="tel"
-                          required
-                          value={consultantPhone}
-                          onChange={(e) => setConsultantPhone(e.target.value)}
-                          placeholder="+1 (555) 000-0000"
-                          className="w-full bg-[#ffffff] px-3.5 py-2.5 rounded-xl font-body-sm text-xs sm:text-sm text-[#071e28] focus:outline-none focus:ring-2 focus:ring-[#67c7e8] border border-[#dbf1ff]"
-                        />
+                        <label className="label" htmlFor="consult-topic">Topic of Pastoral Consultation</label>
+                        <select
+                          id="consult-topic"
+                          value={consultantTopic}
+                          onChange={(e) => setConsultantTopic(e.target.value)}
+                          className="input !bg-white"
+                        >
+                          <option>Spiritual Direction &amp; Discernment</option>
+                          <option>Marriage Convalidation / Preparation</option>
+                          <option>Baptism Preparation Consultation</option>
+                          <option>Grief, Bereavement &amp; Loss Support</option>
+                          <option>Returning to the Sacraments After Long Absence</option>
+                          <option>General Pastoral Counsel</option>
+                        </select>
                       </div>
                       <div>
-                        <label className="block font-label-sm text-xs uppercase tracking-wider text-[#3e484d] mb-1 font-semibold">
-                          Preferred Date
-                        </label>
-                        <input
-                          type="date"
-                          value={consultantDate}
-                          onChange={(e) => setConsultantDate(e.target.value)}
-                          className="w-full bg-[#ffffff] px-3.5 py-2.5 rounded-xl font-body-sm text-xs sm:text-sm text-[#071e28] focus:outline-none focus:ring-2 focus:ring-[#67c7e8] border border-[#dbf1ff]"
+                        <label className="label" htmlFor="consult-notes">Brief Note (Optional)</label>
+                        <textarea
+                          id="consult-notes"
+                          rows={3}
+                          value={consultantNotes}
+                          onChange={(e) => setConsultantNotes(e.target.value)}
+                          placeholder="Any additional information you wish to share ahead of time..."
+                          className="input !bg-white resize-none"
                         />
                       </div>
-                    </div>
-
-                    <div>
-                      <label className="block font-label-sm text-xs uppercase tracking-wider text-[#3e484d] mb-1 font-semibold">
-                        Topic of Pastoral Consultation
-                      </label>
-                      <select
-                        value={consultantTopic}
-                        onChange={(e) => setConsultantTopic(e.target.value)}
-                        className="w-full bg-[#ffffff] px-3.5 py-2.5 rounded-xl font-body-sm text-xs sm:text-sm text-[#071e28] focus:outline-none focus:ring-2 focus:ring-[#67c7e8] border border-[#dbf1ff]"
-                      >
-                        <option>Spiritual Direction &amp; Discernment</option>
-                        <option>Marriage Convalidation / Preparation</option>
-                        <option>Baptism Preparation Consultation</option>
-                        <option>Grief, Bereavement &amp; Loss Support</option>
-                        <option>Returning to the Sacraments After Long Absence</option>
-                        <option>General Pastoral Counsel</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block font-label-sm text-xs uppercase tracking-wider text-[#3e484d] mb-1 font-semibold">
-                        Brief Note (Optional)
-                      </label>
-                      <textarea
-                        rows={3}
-                        value={consultantNotes}
-                        onChange={(e) => setConsultantNotes(e.target.value)}
-                        placeholder="Any additional information you wish to share ahead of time..."
-                        className="w-full bg-[#ffffff] px-3.5 py-2.5 rounded-xl font-body-sm text-xs sm:text-sm text-[#071e28] focus:outline-none focus:ring-2 focus:ring-[#67c7e8] border border-[#dbf1ff] resize-none"
-                      ></textarea>
-                    </div>
-
-                    <div className="pt-2">
-                      <button
-                        type="submit"
-                        className="w-full py-3 rounded-xl bg-[#006780] hover:bg-[#006687] text-white font-label-md text-xs sm:text-sm font-semibold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
-                      >
-                        <span className="material-symbols-outlined text-lg">calendar_today</span>
-                        <span>Submit Pastoral Consultation Request</span>
+                      <button type="submit" className="btn-primary w-full">
+                        <span className="material-symbols-outlined text-[20px]">calendar_today</span>
+                        Submit Pastoral Consultation Request
                       </button>
-                    </div>
-                  </form>
-                )}
+                    </form>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </div>

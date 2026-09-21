@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationTab } from '../types';
 import { IMAGES } from '../data/parishData';
+import { Reveal, PageHero } from '../components/ui';
 
 interface VicarParishScreenProps {
   onNavigate: (tab: NavigationTab) => void;
@@ -9,169 +10,120 @@ interface VicarParishScreenProps {
 
 export const VicarParishScreen: React.FC<VicarParishScreenProps> = ({ onNavigate, onOpenPrayerModal }) => {
   return (
-    <div className="flex flex-col w-full font-body-md text-[#071e28]">
-      {/* Top Header */}
-      <section className="bg-gradient-to-b from-[#e8f6ff] via-[#f4faff] to-[#ffffff] px-4 sm:px-6 lg:px-12 pt-8 pb-12">
-        <div className="max-w-7xl mx-auto space-y-4">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#dbf1ff] text-[#006780] font-label-sm text-[11px] uppercase tracking-widest font-semibold">
-              <span className="material-symbols-outlined text-[15px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-                church
-              </span>
-              Pastoral Leadership &amp; History
-            </span>
-            <span className="text-[#bec8cd] font-label-md">•</span>
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#ffdf98]/40 text-[#5e4706] font-label-sm text-[11px] font-semibold">
-              Diocese of Sanctuary Hill
-            </span>
-          </div>
+    <div className="flex w-full flex-col">
+      <PageHero
+        eyebrow="Pastoral Leadership & History"
+        title="Our Pastoral Clergy & 90-Year Heritage"
+        description="Established on 26 October 1935 under the patronage of Our Lady of Lourdes, Lourde Matha Church, Thalayanadu — തലയനാട് ലൂർദ്ദ് മാതാ പള്ളി — stands as a spiritual home of Syro-Malabar Catholic faith, Eucharistic worship, and charitable service in the Eparchy of Kothamangalam."
+        image={IMAGES.vicarPortrait}
+        imageAlt="Fr. Sebastian Thumbamattam, Parish Vicar"
+        badge="Eparchy of Kothamangalam"
+      />
 
-          <div className="space-y-3 max-w-3xl">
-            <h1 className="font-headline-lg lg:font-display-lg text-3xl sm:text-4xl lg:text-[48px] text-[#071e28] font-serif font-semibold leading-tight">
-              Our Pastoral Clergy &amp; 120-Year Heritage
-            </h1>
-            <p className="font-body-lg text-sm sm:text-base text-[#3e484d] leading-relaxed">
-              Founded in 1904 to serve immigrant quarry families and Marian pilgrims, Sancta Maria Marian Shrine and Parish stands as a spiritual bastion of Roman Catholic faith, Eucharistic worship, and charitable service.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Vicar Profile Card */}
-      <section className="w-full px-4 sm:px-6 lg:px-12 py-8 bg-[#ffffff]">
-        <div className="max-w-7xl mx-auto">
-          <div className="p-8 sm:p-10 rounded-3xl bg-[#e8f6ff] shadow-md border border-[#dbf1ff]">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-4 flex justify-center">
-                <div className="relative rounded-2xl overflow-hidden shadow-lg p-2 bg-white max-w-xs w-full border border-[#dbf1ff]">
-                  <div className="rounded-xl overflow-hidden aspect-square bg-[#c7ddeb]">
-                    <img
-                      alt="Rev. Fr. Joseph Mathew, Parish Vicar"
-                      className="w-full h-full object-cover"
-                      src={IMAGES.vicarPortrait}
-                    />
+      {/* Vicar profile card */}
+      <section className="bg-ivory-50" aria-label="Message from the Vicar">
+        <div className="container-site py-10 lg:py-14">
+          <Reveal>
+            <div className="card overflow-hidden">
+              <div className="grid grid-cols-1 items-center gap-8 p-6 sm:p-10 lg:grid-cols-12">
+                <div className="lg:col-span-4">
+                  <figure className="mx-auto max-w-xs overflow-hidden rounded-2xl border border-line bg-white p-2.5 shadow-card">
+                    <div className="aspect-square overflow-hidden rounded-xl bg-ivory-200">
+                      <img alt="Fr. Sebastian Thumbamattam, Parish Vicar" className="img-zoom h-full w-full object-cover" src={IMAGES.vicarPortrait} loading="lazy" />
+                    </div>
+                    <figcaption className="mt-3 px-1 pb-1.5 text-center">
+                      <h3 className="text-[16px] font-bold text-ink-950">Fr. Sebastian Thumbamattam</h3>
+                      <span className="mt-0.5 block text-[11px] font-bold uppercase tracking-[0.14em] text-maroon-600">
+                        Parish Vicar
+                      </span>
+                    </figcaption>
+                  </figure>
+                </div>
+                <div className="lg:col-span-8">
+                  <span className="badge-gold">Eparchy of Kothamangalam • Thodupuzha Forane</span>
+                  <h2 className="t-h2 mt-4 text-ink-950">A Message from Fr. Sebastian Thumbamattam</h2>
+                  <div className="t-body mt-4 space-y-3.5">
+                    <p className="font-serif text-[17px] italic leading-relaxed text-maroon-800">
+                      “Welcome to Lourde Matha Church. Here, under the mantle of Our Lady of Lourdes, we strive to be a true family of God — nourished by the Holy Qurbana, renewed in confession, and sent forth to bring the compassionate love of Christ to the poor and the sorrowful.”
+                    </p>
+                    <p>
+                      Fr. Sebastian serves as the vicar of Lourde Matha Church, Thalayanadu, shepherding the parish family of the Eparchy of Kothamangalam in faith, worship, and works of mercy.
+                    </p>
                   </div>
-                  <div className="mt-3 text-center">
-                    <h3 className="font-title-lg text-base text-[#071e28] font-bold">
-                      Rev. Fr. Joseph Mathew
-                    </h3>
-                    <span className="font-label-sm text-xs text-[#006780] font-semibold block uppercase tracking-wider">
-                      Parish Vicar &amp; Shrine Rector
-                    </span>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <button onClick={() => onNavigate('sacraments')} className="btn-primary">
+                      Request Meeting with Vicar
+                    </button>
+                    <button onClick={onOpenPrayerModal} className="btn-outline">
+                      Send Private Prayer Petition
+                    </button>
                   </div>
                 </div>
               </div>
-
-              <div className="lg:col-span-8 space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#dbf1ff] text-[#006780] font-label-sm text-xs uppercase font-semibold">
-                  <span>Ordained 1998 • Licentiate in Sacred Theology</span>
-                </div>
-                <h2 className="font-headline-md text-2xl text-[#071e28] font-serif font-bold">
-                  A Message from Fr. Joseph Mathew
-                </h2>
-                <div className="space-y-3 font-body-md text-xs sm:text-sm text-[#3e484d] leading-relaxed">
-                  <p>
-                    “Welcome to Sancta Maria. Here, in the shadow of Our Lady of Grace, we strive to be a true family of God—nourished by the Bread of Angels, renewed in confession, and commissioned to bring the compassionate love of Christ to the poor and sorrowful.”
-                  </p>
-                  <p>
-                    Fr. Joseph completed his priestly studies in Rome and served in diocesan seminary formation and hospital chaplaincy before being appointed Rector of Sancta Maria in 2018.
-                  </p>
-                </div>
-
-                <div className="pt-2 flex flex-wrap gap-3">
-                  <button
-                    onClick={() => onNavigate('sacraments')}
-                    className="px-5 py-2.5 rounded-xl bg-[#006780] hover:bg-[#006687] text-white font-label-md text-xs font-semibold transition-colors shadow-xs cursor-pointer"
-                  >
-                    Request Meeting with Vicar
-                  </button>
-                  <button
-                    onClick={onOpenPrayerModal}
-                    className="px-5 py-2.5 rounded-xl bg-[#dbf1ff] text-[#006780] hover:bg-[#d5ecfa] font-label-md text-xs font-semibold transition-colors cursor-pointer"
-                  >
-                    Send Private Prayer Petition
-                  </button>
-                </div>
-              </div>
             </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Pastoral team & council */}
+      <section className="border-t border-line-soft bg-white" aria-label="Pastoral team">
+        <div className="container-site pb-12 lg:pb-16">
+          <Reveal>
+            <div className="mx-auto max-w-2xl text-center">
+              <span className="eyebrow">Clergy &amp; Pastoral Council</span>
+              <h2 className="t-h2 mt-3 text-balance text-ink-950">Pastoral Team &amp; Parish Officers</h2>
+            </div>
+          </Reveal>
+          <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { role: 'Assistant Vicar', name: 'Visiting Priests', text: 'The vicar is assisted by visiting priests of the Eparchy of Kothamangalam.' },
+              { role: 'Parish Office', name: 'Parish Secretary', text: 'Manages the parish registry, Qurbana intention bookings, and sacramental records.' },
+            ].map((m, i) => (
+              <Reveal key={m.name} delay={i * 80}>
+                <div className="card h-full p-6 sm:p-7">
+                  <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-gold-700">{m.role}</span>
+                  <h3 className="mt-2 font-serif text-[19px] font-semibold text-ink-950">{m.name}</h3>
+                  <p className="t-small mt-2">{m.text}</p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Pastoral Team & Council */}
-      <section className="w-full px-4 sm:px-6 lg:px-12 py-12 bg-[#ffffff]">
-        <div className="max-w-7xl mx-auto space-y-8">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="font-label-md text-xs uppercase tracking-widest text-[#006780] font-semibold">
-              Clergy &amp; Pastoral Council
-            </span>
-            <h2 className="font-headline-lg text-2xl sm:text-3xl text-[#071e28] font-serif font-semibold">
-              Pastoral Team &amp; Parish Officers
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-[#e8f6ff] space-y-2 border border-[#dbf1ff]">
-              <span className="text-[11px] font-bold text-[#745b1b] uppercase">Parochial Vicar</span>
-              <h4 className="font-title-lg text-base text-[#071e28] font-bold">Rev. Fr. Julian Varghese</h4>
-              <p className="font-body-sm text-xs text-[#3e484d]">
-                Oversees Youth Catechesis, First Communion, and hospital sacramental visits.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-[#e8f6ff] space-y-2 border border-[#dbf1ff]">
-              <span className="text-[11px] font-bold text-[#745b1b] uppercase">Permanent Deacon</span>
-              <h4 className="font-title-lg text-base text-[#071e28] font-bold">Deacon Gregory K. Adams</h4>
-              <p className="font-body-sm text-xs text-[#3e484d]">
-                Assists at Solemn High Masses, leads RCIA formation, and directs baptismal ministry.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-[#e8f6ff] space-y-2 border border-[#dbf1ff]">
-              <span className="text-[11px] font-bold text-[#745b1b] uppercase">Parish Administrator</span>
-              <h4 className="font-title-lg text-base text-[#071e28] font-bold">Sister Maria Teresa, OP</h4>
-              <p className="font-body-sm text-xs text-[#3e484d]">
-                Dominican Sister overseeing parish registry, shrine bookings, and sacristan team.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Visitor Guidelines & Directions */}
-      <section className="w-full px-4 sm:px-6 lg:px-12 py-12 bg-[#e8f6ff]">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-6 space-y-4">
-            <span className="font-label-md text-xs uppercase tracking-widest text-[#006780] font-semibold">
-              Location &amp; Access
-            </span>
-            <h2 className="font-headline-lg text-2xl sm:text-3xl text-[#071e28] font-serif font-semibold">
-              Visiting the Shrine &amp; Parish
-            </h2>
-            <div className="space-y-2 font-body-md text-xs sm:text-sm text-[#3e484d]">
-              <p><strong>Address:</strong> 108 Ave Maria Boulevard, Marian Sanctuary Hill</p>
-              <p><strong>Phone:</strong> +1 (800) 555-MARIA / +1 (800) 555-6274</p>
-              <p><strong>Office Hours:</strong> Tuesday – Saturday, 9:00 AM – 4:00 PM</p>
-              <p><strong>Sanctuary Gates:</strong> Open daily 6:00 AM – 9:00 PM</p>
-            </div>
-            <div className="p-4 rounded-xl bg-white text-xs text-[#3e484d] border border-[#dbf1ff]">
-              <strong>Pilgrim Etiquette:</strong> Please maintain reverent silence in the main nave and silence all mobile telephones. Modest attire covering shoulders and knees is appreciated.
-            </div>
-          </div>
-
-          <div className="lg:col-span-6">
-            <div className="rounded-2xl overflow-hidden shadow-md bg-white aspect-[16/10] border border-[#dbf1ff] flex items-center justify-center relative">
-              <img
-                src={IMAGES.grottoOurLadyOfGrace}
-                alt="Sanctuary grounds and entrance"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-5 text-white">
-                <span className="font-title-md text-sm font-semibold">
-                  Sanctuary Hill Courtyard &amp; Outdoor Grotto
-                </span>
+      {/* Visitor guidelines & directions */}
+      <section className="bg-maroon-900 text-ivory-100" aria-label="Visiting the church">
+        <div className="container-site py-12 lg:py-16">
+          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
+            <Reveal className="lg:col-span-6">
+              <span className="eyebrow eyebrow-on-dark">Location &amp; Access</span>
+              <h2 className="t-h2 mt-3 text-ivory-50">Visiting the Church &amp; Parish</h2>
+              <dl className="mt-6 space-y-2.5 text-[14px] leading-relaxed">
+                {[
+                  ['Address:', 'Kolapra – Thalayanadu Road, Thalayanadu P.O., Thodupuzha, Idukki, Kerala 685585'],
+                  ['Phone:', '+91 4862 258 257'],
+                  ['Office Hours:', 'Monday – Saturday, 9:00 AM – 5:00 PM'],
+                  ['Church Gates:', 'Open daily 6:00 AM – 9:00 PM'],
+                ].map(([k, v]) => (
+                  <div key={k} className="flex gap-3 border-b border-white/10 pb-2.5">
+                    <dt className="w-32 shrink-0 font-semibold text-gold-300">{k}</dt>
+                    <dd className="text-ivory-200/90">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="mt-5 rounded-xl border border-gold-400/30 bg-gold-500/10 p-4 text-[13px] leading-relaxed text-ivory-200/90">
+                <strong className="text-gold-300">Pilgrim Etiquette:</strong> Please maintain reverent silence in the main nave and silence all mobile telephones. Modest attire covering shoulders and knees is appreciated.
               </div>
-            </div>
+            </Reveal>
+            <Reveal className="lg:col-span-6" delay={100}>
+              <figure className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
+                <img src={IMAGES.grottoOurLadyOfGrace} alt="Sanctuary grounds and entrance" className="img-zoom h-full w-full object-cover" loading="lazy" />
+                <div className="absolute inset-0 bg-gradient-to-t from-maroon-950/80 via-transparent to-transparent" aria-hidden="true" />
+                <figcaption className="absolute inset-x-0 bottom-0 p-5 text-[15px] font-semibold text-ivory-50">
+                  Church Courtyard &amp; Lourdes Grotto
+                </figcaption>
+              </figure>
+            </Reveal>
           </div>
         </div>
       </section>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavigationTab } from '../types';
 import { IMAGES } from '../data/parishData';
+import { Reveal, PageHero } from '../components/ui';
 
 interface MassTimingsScreenProps {
   onNavigate: (tab: NavigationTab) => void;
@@ -8,18 +9,19 @@ interface MassTimingsScreenProps {
   onOpenPrayerModal: () => void;
 }
 
+type Filter = 'all' | 'daily' | 'sunday' | 'confession' | 'adoration';
+
 export const MassTimingsScreen: React.FC<MassTimingsScreenProps> = ({
   onNavigate,
   onOpenAdorerModal,
-  onOpenPrayerModal,
 }) => {
-  const [activeFilter, setActiveFilter] = useState<'all' | 'daily' | 'sunday' | 'confession' | 'adoration'>('all');
-  
+  const [activeFilter, setActiveFilter] = useState<Filter>('all');
+
   // Mass Intention Form State
   const [intentName, setIntentName] = useState('');
   const [intentNature, setIntentNature] = useState('Repose of the Soul (Departed)');
   const [intentDate, setIntentDate] = useState('');
-  const [intentTime, setIntentTime] = useState('06:30 AM Daily Morning Mass');
+  const [intentTime, setIntentTime] = useState('06:30 AM Daily Holy Qurbana');
   const [offeredBy, setOfferedBy] = useState('');
   const [bookingSuccess, setBookingSuccess] = useState(false);
 
@@ -35,671 +37,444 @@ export const MassTimingsScreen: React.FC<MassTimingsScreenProps> = ({
   };
 
   const handleDownloadPdf = () => {
-    alert("Sancta Maria Liturgical Schedule PDF for 2026 has been generated. The download is ready.");
+    alert('Lourde Matha Church Liturgical Schedule PDF for 2026 has been generated. The download is ready.');
   };
 
+  const filters: { id: Filter; label: string }[] = [
+    { id: 'all', label: 'All Liturgies' },
+    { id: 'daily', label: 'Daily Weekday Qurbana' },
+    { id: 'sunday', label: 'Sunday & Feast Qurbanas' },
+    { id: 'confession', label: 'Sacrament of Reconciliation' },
+    { id: 'adoration', label: 'Perpetual Adoration' },
+  ];
+
   return (
-    <div className="flex flex-col w-full font-body-md text-[#071e28]">
-      {/* Top Sanctuary Banner / Atmospheric Scrim */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#e8f6ff] via-[#f4faff] to-[#ffffff] pt-12 pb-16 px-4 sm:px-6 lg:px-12">
-        <div className="absolute -right-24 -top-24 w-96 h-96 rounded-full bg-[#67c7e8]/20 blur-3xl pointer-events-none"></div>
-        <div className="absolute left-1/3 -bottom-20 w-80 h-80 rounded-full bg-[#c1e8ff]/30 blur-2xl pointer-events-none"></div>
+    <div className="flex w-full flex-col">
+      <PageHero
+        eyebrow="Liturgical Order • Ordinary Time"
+        title="Holy Qurbana, Adoration & Confession Timings"
+        description="Sacramental life at Lourde Matha Church. Join our parish family in solemn daily praise, ceaseless Eucharistic adoration, and the restorative grace of Reconciliation under the mantle of Our Lady of Lourdes."
+        image={IMAGES.mainMarianSanctuary}
+        imageAlt="Main church high altar"
+      />
 
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 relative z-10">
-          <div className="space-y-4 max-w-2xl text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#dbf1ff] text-[#006780] font-label-sm text-xs tracking-wider uppercase shadow-2xs font-semibold">
-              <span className="w-2 h-2 rounded-full bg-[#006780] animate-pulse"></span>
-              <span>Sanctuary Liturgical Order • Ordinary Time</span>
-            </div>
-
-            <h1 className="font-display-lg text-3xl sm:text-5xl lg:text-[52px] text-[#071e28] tracking-tight leading-none">
-              Holy Mass, Adoration &amp; <span className="italic font-normal text-[#006687]">Confession</span> Timings
-            </h1>
-
-            <p className="font-body-lg text-base sm:text-lg text-[#3e484d] max-w-xl leading-relaxed">
-              Sacramental life at Sancta Maria Shrine. Join our faith family in solemn daily praise, ceaseless Eucharistic adoration, and the restorative grace of Reconciliation under the mantle of Our Lady of Grace.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <a
-                href="#intentions-section"
-                className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-[#006780] hover:bg-[#006687] text-white font-label-md text-xs sm:text-sm font-semibold shadow-md transition-all gap-2"
-              >
-                <span className="material-symbols-outlined text-base">church</span>
-                <span>Request Mass Intention</span>
-              </a>
-              <button
-                onClick={handleDownloadPdf}
-                className="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-[#ffffff] hover:bg-[#dbf1ff] text-[#006687] font-label-md text-xs sm:text-sm font-semibold shadow-2xs border border-[#dbf1ff] transition-colors gap-2 cursor-pointer"
-              >
-                <span className="material-symbols-outlined text-base">cloud_download</span>
-                <span>Download Liturgical Calendar (PDF)</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Live Sanctuary Liturgical Highlight Badge */}
-          <div className="w-full md:w-auto shrink-0">
-            <div className="relative bg-[#ffffff]/90 backdrop-blur-md rounded-2xl p-6 shadow-xl max-w-sm border border-[#dbf1ff]">
-              <div className="absolute -top-3 left-6 px-3 py-0.5 rounded-full bg-[#d7b76e] text-[#5e4706] font-label-sm text-xs uppercase tracking-wider font-semibold">
-                Today's Liturgical Rhythm
-              </div>
-              <div className="pt-2 flex items-center justify-between gap-4">
+      {/* Next gathering + actions */}
+      <section className="bg-ivory-50">
+        <div className="container-site py-10 lg:py-14">
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
+            <Reveal className="lg:col-span-7">
+              <div className="card flex h-full flex-col justify-between gap-6 p-6 sm:p-8">
                 <div>
-                  <p className="font-label-sm text-[11px] uppercase text-[#6e797d] tracking-wider">Next Solemn Gathering</p>
-                  <h4 className="font-headline-sm text-lg text-[#071e28] font-semibold">06:00 PM Evening Mass</h4>
+                  <span className="eyebrow">Today's Liturgical Rhythm</span>
+                  <div className="mt-4 flex items-start justify-between gap-4">
+                    <div>
+                      <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-ink-500">Next Solemn Gathering</p>
+                      <h2 className="t-h3 mt-1.5 !text-[1.35rem] text-ink-950">06:30 AM Morning Holy Qurbana</h2>
+                      <p className="t-small mt-2">Main Altar • Homily by Fr. Sebastian Thumbamattam</p>
+                    </div>
+                    <span className="icon-tile"><span className="material-symbols-outlined text-[22px]">notifications_active</span></span>
+                  </div>
                 </div>
-                <div className="w-12 h-12 rounded-xl bg-[#dbf1ff] flex items-center justify-center text-[#006780] shrink-0">
-                  <span className="material-symbols-outlined text-2xl">notifications_active</span>
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-line-soft pt-4 text-[13px] text-ink-500">
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[18px] text-maroon-600">schedule</span>
+                    Confession 30 mins before Qurbana
+                  </span>
+                  <span className="rounded-full bg-maroon-600/10 px-3 py-1 text-[12px] font-bold text-maroon-700">Church Open</span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="live-dot h-2 w-2 rounded-full bg-maroon-500" aria-hidden="true" />
+                    Local Time: <strong>IST (GMT+5:30)</strong>
+                  </span>
                 </div>
               </div>
-              <p className="font-body-sm text-xs text-[#3e484d] mt-2 leading-relaxed">
-                Main Altar of the Immaculate Conception • Homily by Fr. Julian Varghese
-              </p>
-              <div className="mt-4 pt-3 border-t border-[#dbf1ff] flex items-center justify-between text-[#3e484d] font-label-sm text-xs">
-                <span className="inline-flex items-center gap-1 text-[#006780] font-medium">
-                  <span className="material-symbols-outlined text-sm">schedule</span> Confession at 5:30 PM
-                </span>
-                <span className="px-2 py-0.5 rounded bg-[#b7eaff] text-[#001f28] font-semibold">Sanctuary Open</span>
+            </Reveal>
+            <Reveal className="lg:col-span-5" delay={100}>
+              <div className="flex h-full flex-col justify-center gap-3 rounded-2xl bg-maroon-900 p-6 text-ivory-100 sm:p-8">
+                <h2 className="font-serif text-[1.3rem] font-semibold text-ivory-50">Plan Your Visit</h2>
+                <p className="text-[14px] leading-relaxed text-ivory-200/85">
+                  Request a Holy Qurbana intention for your loved ones, or download the full 2026 liturgical calendar.
+                </p>
+                <div className="mt-2 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+                  <a href="#intentions-section" className="btn-gold flex-1">
+                    <span className="material-symbols-outlined text-[20px]">church</span>
+                    Request Qurbana Intention
+                  </a>
+                  <button onClick={handleDownloadPdf} className="btn-outline-light flex-1">
+                    <span className="material-symbols-outlined text-[20px]">cloud_download</span>
+                    Download Liturgical Calendar (PDF)
+                  </button>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Photographic Reverence Strip */}
-      <section className="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-12 -mt-6 z-20">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="relative group overflow-hidden rounded-2xl shadow-md bg-[#ffffff] h-48 border border-[#dbf1ff]">
-            <img
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              alt="Main Marian Sanctuary High Altar"
-              src={IMAGES.mainMarianSanctuary}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1e333e]/85 via-[#1e333e]/25 to-transparent flex flex-col justify-end p-4">
-              <span className="font-label-sm text-xs uppercase tracking-widest text-[#b7eaff] font-semibold">Sacred Space</span>
-              <h3 className="font-headline-sm text-lg text-white font-semibold">Main Marian Sanctuary</h3>
-            </div>
+            </Reveal>
           </div>
 
-          <div className="relative group overflow-hidden rounded-2xl shadow-md bg-[#ffffff] h-48 border border-[#dbf1ff]">
-            <img
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              alt="Eucharistic Adoration Chapel of Peace"
-              src={IMAGES.adorationChapelMonstrance}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1e333e]/85 via-[#1e333e]/25 to-transparent flex flex-col justify-end p-4">
-              <span className="font-label-sm text-xs uppercase tracking-widest text-[#ffdf98] font-semibold">24/7 Monstrance</span>
-              <h3 className="font-headline-sm text-lg text-white font-semibold">Adoration Chapel of Peace</h3>
-            </div>
-          </div>
-
-          <div className="relative group overflow-hidden rounded-2xl shadow-md bg-[#ffffff] h-48 border border-[#dbf1ff]">
-            <img
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              alt="The Pilgrim Rosary Grotto"
-              src={IMAGES.grottoOurLadyOfGrace}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1e333e]/85 via-[#1e333e]/25 to-transparent flex flex-col justify-end p-4">
-              <span className="font-label-sm text-xs uppercase tracking-widest text-[#c1e8ff] font-semibold">Midday Angelus</span>
-              <h3 className="font-headline-sm text-lg text-white font-semibold">The Pilgrim Rosary Grotto</h3>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive Filter Bar */}
-      <section className="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-12 mt-12">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#ffffff] p-2.5 rounded-2xl shadow-sm border border-[#dbf1ff]">
-          <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto" role="tablist">
+          {/* Photographic strip */}
+          <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
             {[
-              { id: 'all', label: 'All Liturgies' },
-              { id: 'daily', label: 'Daily Weekday Mass' },
-              { id: 'sunday', label: 'Sunday & Feast Masses' },
-              { id: 'confession', label: 'Sacrament of Reconciliation' },
-              { id: 'adoration', label: 'Perpetual Adoration' },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveFilter(tab.id as any)}
-                className={`px-4 py-2 rounded-xl font-label-md text-xs font-semibold transition-all cursor-pointer ${
-                  activeFilter === tab.id
-                    ? 'bg-[#006780] text-white shadow-xs'
-                    : 'text-[#3e484d] hover:bg-[#dbf1ff] hover:text-[#071e28]'
-                }`}
-              >
-                {tab.label}
-              </button>
+              { src: IMAGES.mainMarianSanctuary, alt: 'Main church high altar', kicker: 'Sacred Space', title: 'Main Church' },
+              { src: IMAGES.adorationChapelMonstrance, alt: 'Eucharistic Adoration Chapel of Peace', kicker: '24/7 Monstrance', title: 'Adoration Chapel of Peace' },
+              { src: IMAGES.grottoOurLadyOfGrace, alt: 'The Pilgrim Rosary Grotto', kicker: 'Midday Angelus', title: 'The Pilgrim Rosary Grotto' },
+            ].map((p, i) => (
+              <Reveal key={p.title} delay={i * 80}>
+                <figure className="group relative h-52 overflow-hidden rounded-2xl border border-line shadow-card">
+                  <img src={p.src} alt={p.alt} loading="lazy" className="img-zoom h-full w-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-maroon-950/80 via-maroon-950/20 to-transparent" />
+                  <figcaption className="absolute inset-x-0 bottom-0 p-5">
+                    <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-gold-300">{p.kicker}</span>
+                    <h3 className="mt-1 font-serif text-lg font-semibold text-ivory-50">{p.title}</h3>
+                  </figcaption>
+                </figure>
+              </Reveal>
             ))}
           </div>
-          <div className="hidden lg:flex items-center gap-2 text-[#3e484d] px-3 py-1 font-body-sm text-xs">
-            <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#67c7e8]"></span>
-            <span>Local Sanctuary Time: <strong>GMT+1</strong></span>
+        </div>
+      </section>
+
+      {/* Filter bar */}
+      <section className="bg-ivory-50 pb-2">
+        <div className="container-site">
+          <Reveal>
+            <div className="card flex flex-col gap-2 p-2.5 sm:flex-row sm:items-center sm:justify-between" role="tablist" aria-label="Filter liturgies">
+              <div className="flex flex-wrap gap-1.5">
+                {filters.map((f) => (
+                  <button
+                    key={f.id}
+                    role="tab"
+                    aria-selected={activeFilter === f.id}
+                    onClick={() => setActiveFilter(f.id)}
+                    className={`cursor-pointer rounded-lg px-4 py-2 text-[13px] font-semibold transition-all ${
+                      activeFilter === f.id
+                        ? 'bg-maroon-600 text-ivory-50 shadow-sm'
+                        : 'text-ink-700 hover:bg-ivory-100'
+                    }`}
+                  >
+                    {f.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Schedule grid */}
+      <section className="bg-ivory-50">
+        <div className="container-site py-8 lg:py-10">
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
+            {(activeFilter === 'all' || activeFilter === 'daily') && (
+              <Reveal className="lg:col-span-4">
+                <article className="card flex h-full flex-col p-6 sm:p-7">
+                  <header className="flex items-start justify-between border-b border-line-soft pb-4">
+                    <div>
+                      <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-maroon-600">Monday – Friday</p>
+                      <h2 className="t-h3 mt-1 text-ink-950">Daily Liturgies</h2>
+                    </div>
+                    <span className="icon-tile"><span className="material-symbols-outlined text-[22px]">wb_twilight</span></span>
+                  </header>
+                  <p className="t-small mt-3">Begin and sanctify your workday with Eucharistic nourishment and midday Marian devotion.</p>
+                  <div className="mt-4 flex-1 space-y-3">
+                    {[
+                      { time: '06:30 AM', place: 'Main Church', title: 'Morning Holy Qurbana', text: 'Holy Qurbana in Malayalam. Confession open 30 mins prior.' },
+                      { time: '12:00 PM', place: 'Lourdes Grotto', title: 'Angelus & Midday Holy Rosary', text: 'Chanted Angelus, 5 decades of the Rosary, and intercessory blessings.' },
+                    ].map((it) => (
+                      <div key={it.time + it.title} className="rounded-xl border border-line-soft bg-ivory-100 p-4 transition-colors hover:bg-ivory-200/70">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="rounded-md bg-maroon-600 px-2.5 py-1 text-[12px] font-bold text-ivory-50">{it.time}</span>
+                          <span className="text-[11px] font-semibold uppercase tracking-wide text-ink-500">{it.place}</span>
+                        </div>
+                        <h3 className="mt-2.5 text-[15px] font-bold text-ink-950">{it.title}</h3>
+                        <p className="t-small mt-1">{it.text}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <footer className="mt-5 flex items-center justify-between border-t border-line-soft pt-4 text-[12px] text-ink-500">
+                    <span>Church Doors Open 06:00 AM</span>
+                    <span className="font-semibold text-maroon-600">Bells Tolled 3x Daily</span>
+                  </footer>
+                </article>
+              </Reveal>
+            )}
+
+            {(activeFilter === 'all' || activeFilter === 'daily' || activeFilter === 'sunday') && (
+              <Reveal className="lg:col-span-4" delay={80}>
+                <article className="card flex h-full flex-col p-6 sm:p-7">
+                  <header className="flex items-start justify-between border-b border-line-soft pb-4">
+                    <div>
+                      <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gold-600">Saturday Dedication</p>
+                      <h2 className="t-h3 mt-1 text-ink-950">Marian Saturday &amp; Vigil</h2>
+                    </div>
+                    <span className="icon-tile-gold"><span className="material-symbols-outlined text-[22px]">flare</span></span>
+                  </header>
+                  <p className="t-small mt-3">Saturdays are consecrated to Our Lady, featuring solemn novena prayers and the anticipation of the Lord's Day.</p>
+                  <div className="mt-4 flex-1 space-y-3">
+                    {[
+                      { time: '06:30 AM', place: 'Main Church', title: 'Memorial Qurbana of Our Lady', text: 'Commemoration of the Blessed Virgin Mary in quiet morning contemplation.' },
+                      { time: '05:30 PM', place: 'Main Church', title: 'Sunday Vigil Holy Qurbana', text: "Fulfills Sunday obligation. Accompanied by the parish choir." },
+                    ].map((it) => (
+                      <div key={it.time + it.title} className="rounded-xl border border-line-soft bg-ivory-100 p-4 transition-colors hover:bg-ivory-200/70">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="rounded-md bg-gold-500 px-2.5 py-1 text-[12px] font-bold text-maroon-950">{it.time}</span>
+                          <span className="text-[11px] font-semibold uppercase tracking-wide text-ink-500">{it.place}</span>
+                        </div>
+                        <h3 className="mt-2.5 text-[15px] font-bold text-ink-950">{it.title}</h3>
+                        <p className="t-small mt-1">{it.text}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <footer className="mt-5 flex items-center justify-between border-t border-line-soft pt-4 text-[12px] text-ink-500">
+                    <span>Novena Intentions Read Weekly</span>
+                    <span className="font-semibold text-gold-700">Blessing with Relic</span>
+                  </footer>
+                </article>
+              </Reveal>
+            )}
+
+            {(activeFilter === 'all' || activeFilter === 'sunday') && (
+              <Reveal className="lg:col-span-4" delay={160}>
+                <article className="card flex h-full flex-col p-6 sm:p-7">
+                  <header className="flex items-start justify-between border-b border-line-soft pb-4">
+                    <div>
+                      <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-maroon-600">Lord's Day Celebration</p>
+                      <h2 className="t-h3 mt-1 text-ink-950">Sunday Holy Qurbana</h2>
+                    </div>
+                    <span className="icon-tile"><span className="material-symbols-outlined text-[22px]">wb_sunny</span></span>
+                  </header>
+                  <p className="t-small mt-3">Two Sunday liturgies for early worshippers and the whole parish family.</p>
+                  <div className="mt-4 flex-1 space-y-2.5">
+                    {[
+                      { title: '07:00 AM Morning Holy Qurbana', text: 'Quiet morning liturgy in Malayalam', tag: 'Dawn' },
+                      { title: '09:30 AM Solemn Holy Qurbana', text: 'Parish Choir & Solemn Celebration', tag: 'Solemn', choral: true },
+                    ].map((it) => (
+                      <div key={it.title} className={`flex items-center justify-between gap-3 rounded-xl border p-3.5 ${it.choral ? 'border-gold-400/60 bg-gold-100/50' : 'border-line-soft bg-ivory-100'}`}>
+                        <div>
+                          <h3 className="text-[14px] font-bold text-ink-950">
+                            {it.title}
+                            {it.choral && (
+                              <span className="ml-2 rounded bg-gold-500 px-1.5 py-0.5 align-middle text-[10px] font-bold uppercase text-maroon-950">Choral</span>
+                            )}
+                          </h3>
+                          <p className="t-small mt-0.5">{it.text}</p>
+                        </div>
+                        <span className={`shrink-0 rounded-md px-2.5 py-1 text-[12px] font-bold ${it.choral ? 'bg-maroon-600 text-ivory-50' : 'bg-white text-maroon-700 ring-1 ring-line'}`}>
+                          {it.tag}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <footer className="mt-5 flex items-center justify-between border-t border-line-soft pt-4 text-[12px] text-ink-500">
+                    <span>Catechism After 9:30 AM Qurbana</span>
+                    <span className="font-semibold text-maroon-600">Coffee &amp; Fellowship After</span>
+                  </footer>
+                </article>
+              </Reveal>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Comprehensive Daily Liturgical Schedule Grid */}
-      <section className="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-12 mt-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Weekday Column (Mon-Fri) */}
-          {(activeFilter === 'all' || activeFilter === 'daily') && (
-            <div className="lg:col-span-4 flex flex-col">
-              <div className="bg-[#ffffff] rounded-2xl shadow-sm p-6 flex-1 flex flex-col justify-between border border-[#dbf1ff]">
-                <div>
-                  <div className="flex items-center justify-between pb-3 border-b border-[#dbf1ff]">
-                    <div>
-                      <span className="font-label-sm text-[11px] uppercase tracking-widest text-[#006780] font-semibold">
-                        Monday – Friday
-                      </span>
-                      <h2 className="font-headline-md text-xl text-[#071e28] font-semibold">Daily Liturgies</h2>
-                    </div>
-                    <span className="material-symbols-outlined text-[#67c7e8] text-3xl">wb_twilight</span>
-                  </div>
-                  <p className="font-body-sm text-xs text-[#3e484d] mt-2 mb-4">
-                    Begin and sanctify your workday with Eucharistic nourishment and noon Marian devotions.
-                  </p>
-
-                  <div className="space-y-3">
-                    {/* Item 1 */}
-                    <div className="p-4 rounded-xl bg-[#e8f6ff] transition-all hover:bg-[#dbf1ff] border border-[#dbf1ff]">
-                      <div className="flex items-start justify-between">
-                        <span className="px-2 py-0.5 rounded bg-[#006780] text-white font-label-sm text-xs font-bold">
-                          06:30 AM
-                        </span>
-                        <span className="font-label-sm text-[11px] text-[#3e484d] uppercase font-medium">Main Sanctuary</span>
-                      </div>
-                      <h4 className="font-title-md text-sm text-[#071e28] font-semibold mt-2">Morning Praise &amp; Solemn Eucharist</h4>
-                      <p className="font-body-sm text-xs text-[#3e484d] mt-1">Lauds followed by Holy Sacrifice. Confession open 30 mins prior.</p>
-                    </div>
-
-                    {/* Item 2 */}
-                    <div className="p-4 rounded-xl bg-[#e8f6ff] transition-all hover:bg-[#dbf1ff] border border-[#dbf1ff]">
-                      <div className="flex items-start justify-between">
-                        <span className="px-2 py-0.5 rounded bg-[#dbf1ff] text-[#006780] font-label-sm text-xs font-bold">
-                          12:00 PM
-                        </span>
-                        <span className="font-label-sm text-[11px] text-[#3e484d] uppercase font-medium">Grotto of Grace</span>
-                      </div>
-                      <h4 className="font-title-md text-sm text-[#071e28] font-semibold mt-2">Angelus &amp; Midday Holy Rosary</h4>
-                      <p className="font-body-sm text-xs text-[#3e484d] mt-1">Chanted Angelus, 5 decades of the Rosary, pilgrim intercessory blessings.</p>
-                    </div>
-
-                    {/* Item 3 */}
-                    <div className="p-4 rounded-xl bg-[#e8f6ff] transition-all hover:bg-[#dbf1ff] border border-[#dbf1ff]">
-                      <div className="flex items-start justify-between">
-                        <span className="px-2 py-0.5 rounded bg-[#006687] text-white font-label-sm text-xs font-bold">
-                          06:00 PM
-                        </span>
-                        <span className="font-label-sm text-[11px] text-[#3e484d] uppercase font-medium">Main Sanctuary</span>
-                      </div>
-                      <h4 className="font-title-md text-sm text-[#071e28] font-semibold mt-2">Evening Mass with Homily</h4>
-                      <p className="font-body-sm text-xs text-[#3e484d] mt-1">Reflective evening service with full liturgical homily &amp; blessings.</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-6 pt-3 border-t border-[#dbf1ff] flex items-center justify-between text-[#3e484d] font-label-sm text-xs">
-                  <span>Shrine Doors Open 06:00 AM</span>
-                  <span className="text-[#006780] font-semibold">Bells Tolled 3x Daily</span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Saturday Column (Marian Dedication & Vigil) */}
-          {(activeFilter === 'all' || activeFilter === 'daily' || activeFilter === 'sunday') && (
-            <div className="lg:col-span-4 flex flex-col">
-              <div className="bg-[#ffffff] rounded-2xl shadow-sm p-6 flex-1 flex flex-col justify-between border border-[#dbf1ff]">
-                <div>
-                  <div className="flex items-center justify-between pb-3 border-b border-[#dbf1ff]">
-                    <div>
-                      <span className="font-label-sm text-[11px] uppercase tracking-widest text-[#745b1b] font-semibold">
-                        Saturday Dedication
-                      </span>
-                      <h2 className="font-headline-md text-xl text-[#071e28] font-semibold">Marian Saturday &amp; Vigil</h2>
-                    </div>
-                    <span className="material-symbols-outlined text-[#745b1b] text-3xl">flare</span>
-                  </div>
-                  <p className="font-body-sm text-xs text-[#3e484d] mt-2 mb-4">
-                    Saturdays are consecrated to Our Lady, featuring solemn novena prayers and the anticipation of the Lord's Day.
-                  </p>
-
-                  <div className="space-y-3">
-                    {/* Item 1 */}
-                    <div className="p-4 rounded-xl bg-[#e8f6ff] transition-all hover:bg-[#dbf1ff] border border-[#dbf1ff]">
-                      <div className="flex items-start justify-between">
-                        <span className="px-2 py-0.5 rounded bg-[#d7b76e] text-[#5e4706] font-label-sm text-xs font-bold">
-                          06:30 AM
-                        </span>
-                        <span className="font-label-sm text-[11px] text-[#3e484d] uppercase font-medium">Blessed Sacrament Altar</span>
-                      </div>
-                      <h4 className="font-title-md text-sm text-[#071e28] font-semibold mt-2">Memorial Mass of Our Lady</h4>
-                      <p className="font-body-sm text-xs text-[#3e484d] mt-1">Commemoration of the Blessed Virgin Mary in quiet morning contemplation.</p>
-                    </div>
-
-                    {/* Item 2 */}
-                    <div className="p-4 rounded-xl bg-[#e8f6ff] transition-all hover:bg-[#dbf1ff] border border-[#dbf1ff]">
-                      <div className="flex items-start justify-between">
-                        <span className="px-2 py-0.5 rounded bg-[#67c7e8] text-[#005266] font-label-sm text-xs font-bold">
-                          10:00 AM
-                        </span>
-                        <span className="font-label-sm text-[11px] text-[#3e484d] uppercase font-medium">Solemn Basilica Floor</span>
-                      </div>
-                      <h4 className="font-title-md text-sm text-[#071e28] font-semibold mt-2">Healing Mass &amp; Marian Novena</h4>
-                      <p className="font-body-sm text-xs text-[#3e484d] mt-1">Sacrament of the Anointing of the Sick and solemn petition reading.</p>
-                    </div>
-
-                    {/* Item 3 */}
-                    <div className="p-4 rounded-xl bg-[#e8f6ff] transition-all hover:bg-[#dbf1ff] border border-[#dbf1ff]">
-                      <div className="flex items-start justify-between">
-                        <span className="px-2 py-0.5 rounded bg-[#006687] text-white font-label-sm text-xs font-bold">
-                          05:00 PM
-                        </span>
-                        <span className="font-label-sm text-[11px] text-[#3e484d] uppercase font-medium">Main Sanctuary</span>
-                      </div>
-                      <h4 className="font-title-md text-sm text-[#071e28] font-semibold mt-2">Sunday Vigil Anticipated Mass</h4>
-                      <p className="font-body-sm text-xs text-[#3e484d] mt-1">Fulfills Sunday obligation. Accompanied by organ choir prelude.</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-6 pt-3 border-t border-[#dbf1ff] flex items-center justify-between text-[#3e484d] font-label-sm text-xs">
-                  <span>Novena Intentions Read Weekly</span>
-                  <span className="text-[#745b1b] font-semibold">Blessing with Relic</span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Sunday Obligation Column */}
-          {(activeFilter === 'all' || activeFilter === 'sunday') && (
-            <div className="lg:col-span-4 flex flex-col">
-              <div className="bg-[#ffffff] rounded-2xl shadow-sm p-6 flex-1 flex flex-col justify-between border border-[#dbf1ff]">
-                <div>
-                  <div className="flex items-center justify-between pb-3 border-b border-[#dbf1ff]">
-                    <div>
-                      <span className="font-label-sm text-[11px] uppercase tracking-widest text-[#006780] font-semibold">
-                        Lord's Day Celebration
-                      </span>
-                      <h2 className="font-headline-md text-xl text-[#071e28] font-semibold">Sunday Obligation</h2>
-                    </div>
-                    <span className="material-symbols-outlined text-[#006780] text-3xl">wb_sunny</span>
-                  </div>
-                  <p className="font-body-sm text-xs text-[#3e484d] mt-2 mb-4">
-                    Four Sunday liturgies accommodating early pilgrims, multi-generational families, and evening worshipers.
-                  </p>
-
-                  <div className="space-y-2 text-xs">
-                    {/* Item 1 */}
-                    <div className="p-3 rounded-xl bg-[#e8f6ff] transition-all hover:bg-[#dbf1ff] flex items-center justify-between border border-[#dbf1ff]">
-                      <div>
-                        <h5 className="font-title-md text-sm text-[#071e28] font-semibold">06:00 AM Dawn Mass</h5>
-                        <p className="font-body-sm text-xs text-[#3e484d]">Silent spoken Mass in peaceful dawn light</p>
-                      </div>
-                      <span className="px-2 py-0.5 rounded bg-[#dbf1ff] text-[#006780] font-label-sm font-bold shrink-0">
-                        Dawn
-                      </span>
-                    </div>
-
-                    {/* Item 2 */}
-                    <div className="p-3 rounded-xl bg-[#dbf1ff] transition-all hover:bg-[#d5ecfa] flex items-center justify-between shadow-2xs border border-[#67c7e8]">
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <h5 className="font-title-md text-sm text-[#006780] font-bold">08:00 AM Solemn High Mass</h5>
-                          <span className="px-1.5 py-0.5 rounded bg-[#d7b76e] text-[#5e4706] text-[10px] font-bold uppercase">Choral</span>
-                        </div>
-                        <p className="font-body-sm text-xs text-[#3e484d]">Polyphonic Shrine Choir, Organ &amp; Incense</p>
-                      </div>
-                      <span className="px-2 py-0.5 rounded bg-[#006780] text-white font-label-sm font-bold shrink-0">
-                        Solemn
-                      </span>
-                    </div>
-
-                    {/* Item 3 */}
-                    <div className="p-3 rounded-xl bg-[#e8f6ff] transition-all hover:bg-[#dbf1ff] flex items-center justify-between border border-[#dbf1ff]">
-                      <div>
-                        <h5 className="font-title-md text-sm text-[#071e28] font-semibold">10:30 AM Youth &amp; Family Mass</h5>
-                        <p className="font-body-sm text-xs text-[#3e484d]">Children's Liturgy of the Word in Hall</p>
-                      </div>
-                      <span className="px-2 py-0.5 rounded bg-[#dbf1ff] text-[#006687] font-label-sm font-bold shrink-0">
-                        Family
-                      </span>
-                    </div>
-
-                    {/* Item 4 */}
-                    <div className="p-3 rounded-xl bg-[#e8f6ff] transition-all hover:bg-[#dbf1ff] flex items-center justify-between border border-[#dbf1ff]">
-                      <div>
-                        <h5 className="font-title-md text-sm text-[#071e28] font-semibold">05:30 PM Evening Regional Mass</h5>
-                        <p className="font-body-sm text-xs text-[#3e484d]">Bilingual worship (English &amp; Regional)</p>
-                      </div>
-                      <span className="px-2 py-0.5 rounded bg-[#dbf1ff] text-[#6e797d] font-label-sm font-bold shrink-0">
-                        Evening
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-6 pt-3 border-t border-[#dbf1ff] flex items-center justify-between text-[#3e484d] font-label-sm text-xs">
-                  <span>Nursery Available (10:30 AM)</span>
-                  <span className="text-[#006687] font-semibold">Coffee &amp; Fellowship After</span>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Focused Sacraments: Reconciliation & Perpetual Adoration */}
+      {/* Reconciliation & Adoration */}
       {(activeFilter === 'all' || activeFilter === 'confession' || activeFilter === 'adoration') && (
-        <section className="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-12 mt-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            {/* Reconciliation Feature Card */}
-            {(activeFilter === 'all' || activeFilter === 'confession') && (
-              <div className={`${activeFilter === 'confession' ? 'lg:col-span-12' : 'lg:col-span-6'}`}>
-                <div className="bg-[#ffffff] rounded-3xl p-6 sm:p-8 shadow-lg h-full flex flex-col justify-between border border-[#dbf1ff]">
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-[#c1e8ff] flex items-center justify-center text-[#006687]">
-                        <span className="material-symbols-outlined text-2xl">lock_reset</span>
-                      </div>
+        <section className="border-t border-line-soft bg-white">
+          <div className="container-site pb-4 pt-6">
+            <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+              {(activeFilter === 'all' || activeFilter === 'confession') && (
+                <Reveal>
+                  <article className="card flex h-full flex-col p-6 sm:p-8">
+                    <div className="flex items-center gap-4">
+                      <span className="icon-tile !h-12 !w-12"><span className="material-symbols-outlined text-[24px]">lock_reset</span></span>
                       <div>
-                        <span className="font-label-sm text-xs uppercase tracking-widest text-[#006687] font-semibold">
-                          Sacrament of Divine Mercy
-                        </span>
-                        <h3 className="font-headline-md text-xl text-[#071e28] font-semibold">Sacrament of Reconciliation</h3>
+                        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-maroon-600">Sacrament of Divine Mercy</p>
+                        <h2 className="t-h3 mt-1 !text-[1.35rem] text-ink-950">Sacrament of Reconciliation</h2>
                       </div>
                     </div>
-
-                    <p className="font-body-md text-xs sm:text-sm text-[#3e484d] leading-relaxed">
-                      “Take courage, your sins are forgiven.” Approach the confessional with complete confidence in Christ's tender love and absolution.
-                    </p>
-
-                    <div className="space-y-3 pt-1">
-                      <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-[#e8f6ff] border border-[#dbf1ff]">
-                        <span className="material-symbols-outlined text-[#006780] mt-1 text-2xl">schedule</span>
-                        <div className="space-y-1">
-                          <h4 className="font-title-md text-xs sm:text-sm text-[#071e28] font-semibold">
-                            Daily Before Every Holy Mass
-                          </h4>
-                          <p className="font-body-sm text-xs text-[#3e484d]">
-                            Confessors are present inside the confessional boxes <strong>30 minutes prior</strong> to every morning and evening Mass.
-                          </p>
+                    <p className="t-body mt-4">“Take courage, your sins are forgiven.” Approach the confessional with complete confidence in Christ's tender love and absolution.</p>
+                    <div className="mt-5 space-y-3">
+                      <div className="flex items-start gap-3.5 rounded-xl border border-line-soft bg-ivory-100 p-4">
+                        <span className="material-symbols-outlined mt-0.5 text-[24px] text-maroon-600">schedule</span>
+                        <div>
+                          <h3 className="text-[15px] font-bold text-ink-950">Daily Before Every Holy Qurbana</h3>
+                          <p className="t-small mt-1">Confessors are present inside the confessional boxes <strong>30 minutes prior</strong> to every Holy Qurbana.</p>
                         </div>
                       </div>
-
-                      <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-[#e8f6ff] border border-[#dbf1ff]">
-                        <span className="material-symbols-outlined text-[#006687] mt-1 text-2xl">meeting_room</span>
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-2">
-                            <h4 className="font-title-md text-xs sm:text-sm text-[#071e28] font-semibold">
-                              Saturday Solemn Confessions
-                            </h4>
-                            <span className="px-2 py-0.5 rounded bg-[#006687] text-white text-[10px] font-bold">
-                              Dedicated
-                            </span>
-                          </div>
-                          <p className="font-body-sm text-xs text-[#3e484d]">
-                            <strong>4:00 PM – 5:30 PM</strong> in the St. Joseph East Wing Confessionals. Two priest confessors available continuously.
-                          </p>
+                      <div className="flex items-start gap-3.5 rounded-xl border border-line-soft bg-ivory-100 p-4">
+                        <span className="material-symbols-outlined mt-0.5 text-[24px] text-maroon-600">meeting_room</span>
+                        <div>
+                          <h3 className="text-[15px] font-bold text-ink-950">
+                            Saturday Solemn Confessions
+                            <span className="ml-2 rounded bg-maroon-600 px-2 py-0.5 align-middle text-[10px] font-bold uppercase text-ivory-50">Dedicated</span>
+                          </h3>
+                          <p className="t-small mt-1"><strong>5:00 PM – 6:00 PM</strong> in the church confessionals. Two priest confessors available continuously.</p>
                         </div>
                       </div>
                     </div>
-
-                    <div className="p-3.5 rounded-xl bg-[#dbf1ff] text-[#071e28] flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-2 text-xs">
-                        <span className="material-symbols-outlined text-[#006780] text-lg">support_agent</span>
-                        <span>Need quiet spiritual counseling or an extended confession?</span>
-                      </div>
-                      <button
-                        onClick={() => onNavigate('sacraments')}
-                        className="shrink-0 px-3 py-1.5 rounded-lg bg-[#006780] hover:bg-[#006687] text-white font-label-sm text-xs font-semibold transition-colors cursor-pointer"
-                      >
-                        Book with Vicar
-                      </button>
+                    <div className="mt-5 flex flex-col gap-3 rounded-xl bg-ivory-100 p-4 sm:flex-row sm:items-center sm:justify-between">
+                      <p className="inline-flex items-center gap-2 text-[13px] text-ink-700">
+                        <span className="material-symbols-outlined text-[20px] text-maroon-600">support_agent</span>
+                        Need quiet spiritual counseling or an extended confession?
+                      </p>
+                      <button onClick={() => onNavigate('sacraments')} className="btn-primary btn-sm shrink-0">Book with Vicar</button>
                     </div>
-                  </div>
+                    <footer className="mt-5 flex flex-wrap items-center justify-between gap-2 border-t border-line-soft pt-4 text-[12px] text-ink-500">
+                      <span className="inline-flex items-center gap-1.5">
+                        <span className="material-symbols-outlined text-[16px] text-maroon-600">verified_user</span>
+                        Anonymous or Face-to-Face
+                      </span>
+                      <span className="font-semibold text-maroon-600">Examination of Conscience Guides Available</span>
+                    </footer>
+                  </article>
+                </Reveal>
+              )}
 
-                  <div className="mt-6 pt-3 border-t border-[#dbf1ff] flex items-center justify-between text-[#3e484d] font-label-sm text-xs">
-                    <span className="flex items-center gap-1">
-                      <span className="material-symbols-outlined text-sm text-[#006780]">verified_user</span> Anonymous or Face-to-Face
-                    </span>
-                    <span className="text-[#006780] font-semibold">Examination of Conscience Guides Available</span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Perpetual Adoration & Vigil Feature Card */}
-            {(activeFilter === 'all' || activeFilter === 'adoration') && (
-              <div className={`${activeFilter === 'adoration' ? 'lg:col-span-12' : 'lg:col-span-6'}`}>
-                <div className="bg-[#ffffff] rounded-3xl p-6 sm:p-8 shadow-lg h-full flex flex-col justify-between border border-[#dbf1ff]">
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-[#ffdf98] flex items-center justify-center text-[#745b1b]">
-                        <span className="material-symbols-outlined text-2xl">local_fire_department</span>
-                      </div>
+              {(activeFilter === 'all' || activeFilter === 'adoration') && (
+                <Reveal delay={100}>
+                  <article className="card flex h-full flex-col p-6 sm:p-8">
+                    <div className="flex items-center gap-4">
+                      <span className="icon-tile-gold !h-12 !w-12"><span className="material-symbols-outlined text-[24px]">local_fire_department</span></span>
                       <div>
-                        <span className="font-label-sm text-xs uppercase tracking-widest text-[#745b1b] font-semibold">
-                          Corpus Christi Presence
-                        </span>
-                        <h3 className="font-headline-md text-xl text-[#071e28] font-semibold">Perpetual Adoration Chapel</h3>
+                        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gold-600">Corpus Christi Presence</p>
+                        <h2 className="t-h3 mt-1 !text-[1.35rem] text-ink-950">Perpetual Adoration Chapel</h2>
                       </div>
                     </div>
+                    <p className="t-body mt-4">The Blessed Sacrament is exposed for unceasing adoration day and night in the quiet south nave. Come sit in silent awe with Jesus in the Most Holy Eucharist.</p>
 
-                    <p className="font-body-md text-xs sm:text-sm text-[#3e484d] leading-relaxed">
-                      The Blessed Sacrament is exposed for unceasing adoration day and night in the quiet south nave. Come sit in silent awe with Jesus in the Most Holy Eucharist.
-                    </p>
-
-                    {/* Interactive Adoration Status Card */}
-                    <div className="bg-[#e8f6ff] rounded-2xl p-4 border border-[#dbf1ff]">
-                      <div className="flex items-center justify-between pb-3 border-b border-[#dbf1ff]">
-                        <div className="flex items-center gap-2">
-                          <span className="w-3 h-3 rounded-full bg-[#d7b76e] animate-pulse"></span>
-                          <span className="font-title-md text-xs sm:text-sm text-[#071e28] font-semibold">
-                            Current Adoration Guard
-                          </span>
-                        </div>
-                        <span className="font-label-sm text-xs px-2.5 py-0.5 rounded-full bg-[#745b1b] text-white font-bold">
-                          24 Hours / 7 Days
-                        </span>
+                    <div className="mt-5 rounded-xl border border-line-soft bg-ivory-100 p-4">
+                      <div className="flex items-center justify-between border-b border-line-soft pb-3">
+                        <p className="inline-flex items-center gap-2 text-[14px] font-bold text-ink-950">
+                          <span className="live-dot h-2.5 w-2.5 rounded-full bg-gold-500" aria-hidden="true" />
+                          Current Adoration Guard
+                        </p>
+                        <span className="rounded-full bg-gold-600 px-2.5 py-1 text-[11px] font-bold text-ivory-50">24 Hours / 7 Days</span>
                       </div>
-
                       <div className="mt-3 grid grid-cols-2 gap-3">
-                        <div className="p-3 bg-[#ffffff] rounded-xl shadow-xs border border-[#dbf1ff]">
-                          <span className="font-label-sm text-[10px] text-[#3e484d] uppercase font-semibold">Shrine Access</span>
-                          <p className="font-title-md text-xs sm:text-sm text-[#071e28] font-bold mt-0.5">Open 06:00 - 21:00</p>
-                          <span className="text-[11px] text-[#6e797d]">Unrestricted daytime entry</span>
+                        <div className="rounded-xl border border-line-soft bg-white p-3.5">
+                          <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-ink-500">Church Access</p>
+                          <p className="mt-1 text-[14px] font-bold text-ink-950">Open 06:00 - 21:00</p>
+                          <p className="text-[11px] text-ink-500">Unrestricted daytime entry</p>
                         </div>
-                        <div className="p-3 bg-[#ffffff] rounded-xl shadow-xs border border-[#dbf1ff]">
-                          <span className="font-label-sm text-[10px] text-[#3e484d] uppercase font-semibold">Night Vigil</span>
-                          <p className="font-title-md text-xs sm:text-sm text-[#071e28] font-bold mt-0.5">Keycode Entry</p>
-                          <span className="text-[11px] text-[#6e797d]">Registered Adorers (21:00 - 06:00)</span>
+                        <div className="rounded-xl border border-line-soft bg-white p-3.5">
+                          <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-ink-500">Night Vigil</p>
+                          <p className="mt-1 text-[14px] font-bold text-ink-950">Keycode Entry</p>
+                          <p className="text-[11px] text-ink-500">Registered Adorers (21:00 - 06:00)</p>
                         </div>
                       </div>
-
-                      {/* Visual Holy Hour Adorer Sparkline */}
-                      <div className="mt-3 pt-2 border-t border-[#dbf1ff] flex flex-col gap-1.5">
-                        <div className="flex items-center justify-between text-xs font-semibold text-[#3e484d]">
+                      <div className="mt-4 border-t border-line-soft pt-3">
+                        <div className="flex items-center justify-between text-[12px] font-semibold text-ink-700">
                           <span>Adoration Guard Coverage</span>
-                          <span className="text-[#745b1b]">96% Hours Pledged</span>
+                          <span className="text-gold-700">96% Hours Pledged</span>
                         </div>
-                        <div className="w-full bg-[#dbf1ff] h-2.5 rounded-full overflow-hidden">
-                          <div className="bg-[#745b1b] h-full rounded-full w-[96%] transition-all duration-1000"></div>
+                        <div className="mt-2 h-2.5 overflow-hidden rounded-full bg-ivory-200" role="progressbar" aria-valuenow={96} aria-valuemin={0} aria-valuemax={100} aria-label="Adoration guard coverage">
+                          <div className="h-full w-[96%] rounded-full bg-gold-500" />
                         </div>
                       </div>
                     </div>
 
-                    {/* Adorer Sign Up Micro-Callout */}
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 rounded-2xl bg-[#dbf1ff] border border-[#67c7e8]/40">
+                    <div className="mt-5 flex flex-col gap-3 rounded-xl border border-gold-400/40 bg-gold-100/50 p-4 sm:flex-row sm:items-center sm:justify-between">
                       <div>
-                        <h5 className="font-title-md text-xs sm:text-sm text-[#071e28] font-semibold">Pledge One Holy Hour Weekly</h5>
-                        <p className="font-body-sm text-xs text-[#3e484d]">Join over 350 committed parishioners keeping holy watch.</p>
+                        <h3 className="text-[14px] font-bold text-ink-950">Pledge One Holy Hour Weekly</h3>
+                        <p className="t-small mt-0.5">Join over 350 committed parishioners keeping holy watch.</p>
                       </div>
-                      <button
-                        onClick={onOpenAdorerModal}
-                        className="w-full sm:w-auto px-4 py-2 rounded-xl bg-[#745b1b] hover:bg-[#5e4706] text-white font-label-md text-xs font-semibold shrink-0 shadow-xs transition-colors cursor-pointer"
-                      >
-                        Become an Adorer
-                      </button>
+                      <button onClick={onOpenAdorerModal} className="btn-primary btn-sm shrink-0">Become an Adorer</button>
                     </div>
-                  </div>
-
-                  <div className="mt-6 pt-3 border-t border-[#dbf1ff] flex items-center justify-between text-[#3e484d] font-label-sm text-xs">
-                    <span>St. John Paul II Adoration Wing</span>
-                    <span className="text-[#745b1b] font-semibold">Chime every 15 mins</span>
-                  </div>
-                </div>
-              </div>
-            )}
+                    <footer className="mt-5 flex flex-wrap items-center justify-between gap-2 border-t border-line-soft pt-4 text-[12px] text-ink-500">
+                      <span>Adoration Chapel</span>
+                      <span className="font-semibold text-gold-700">Chime every 15 mins</span>
+                    </footer>
+                  </article>
+                </Reveal>
+              )}
+            </div>
           </div>
         </section>
       )}
 
-      {/* Holy Mass Offering & Intentions Booking Section */}
-      <section className="max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-12 mt-14 mb-16" id="intentions-section">
-        <div className="bg-[#ffffff] rounded-3xl p-6 sm:p-10 shadow-lg relative overflow-hidden border border-[#dbf1ff]">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-[#67c7e8]/10 rounded-full blur-3xl pointer-events-none"></div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-            <div className="lg:col-span-5 space-y-4">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#dbf1ff] text-[#006780] font-label-sm text-xs uppercase font-semibold">
-                <span className="material-symbols-outlined text-sm">favorite</span>
-                <span>Spiritual Gifts</span>
-              </div>
-
-              <h2 className="font-headline-lg text-2xl sm:text-3xl text-[#071e28] leading-tight">
-                Offer a Holy Mass for Your Loved Ones
-              </h2>
-
-              <p className="font-body-md text-xs sm:text-sm text-[#3e484d] leading-relaxed">
-                The Holy Sacrifice of the Mass is the highest form of prayer and thanksgiving. Request an intention for the repose of a departed soul, birthday or wedding thanksgiving, recovery of health, or special personal needs.
-              </p>
-
-              <div className="space-y-2.5 pt-2 text-xs">
-                <div className="flex items-center gap-3">
-                  <span className="w-6 h-6 rounded-full bg-[#dbf1ff] text-[#006780] flex items-center justify-center font-bold text-xs shrink-0">1</span>
-                  <p className="text-[#071e28]">Intentions read at your requested Mass date &amp; printed in the parish bulletin.</p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="w-6 h-6 rounded-full bg-[#dbf1ff] text-[#006780] flex items-center justify-center font-bold text-xs shrink-0">2</span>
-                  <p className="text-[#071e28]">Complimentary commemorative Marian Mass Card mailed upon request.</p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="w-6 h-6 rounded-full bg-[#dbf1ff] text-[#006780] flex items-center justify-center font-bold text-xs shrink-0">3</span>
-                  <p className="text-[#071e28]">Stipends go directly toward shrine maintenance &amp; priestly ministries.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Interactive Mass Booking Mini-Form */}
-            <div className="lg:col-span-7 bg-[#e8f6ff] p-6 sm:p-8 rounded-2xl shadow-inner border border-[#dbf1ff]">
-              <h3 className="font-title-lg text-lg text-[#071e28] font-semibold mb-4">Request Mass Intention Online</h3>
-
-              {bookingSuccess ? (
-                <div className="p-6 rounded-2xl bg-white border border-[#dbf1ff] space-y-2 text-center">
-                  <div className="w-12 h-12 rounded-full bg-[#67c7e8]/30 text-[#006780] flex items-center justify-center mx-auto">
-                    <span className="material-symbols-outlined text-2xl">check_circle</span>
-                  </div>
-                  <h4 className="font-title-md text-base text-[#006780] font-bold">Intention Submitted to the Shrine Office</h4>
-                  <p className="font-body-sm text-xs text-[#3e484d]">
-                    Our sacristan will record your intention for {intentDate || 'the next scheduled Mass'} and send your confirmation email.
+      {/* Mass intention booking */}
+      <section className="scroll-mt-28 bg-ivory-50" id="intentions-section" aria-label="Request a Holy Qurbana intention">
+        <div className="container-site py-12 lg:py-16">
+          <Reveal>
+            <div className="card overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-12">
+                <div className="bg-maroon-900 p-7 text-ivory-100 sm:p-10 lg:col-span-5">
+                  <span className="eyebrow eyebrow-on-dark">Spiritual Gifts</span>
+                  <h2 className="t-h2 mt-3 text-balance text-ivory-50">Offer a Holy Qurbana for Your Loved Ones</h2>
+                  <p className="mt-4 text-[14px] leading-relaxed text-ivory-200/85">
+                    The Holy Qurbana is the highest form of prayer and thanksgiving. Request an intention for the repose of a departed soul, birthday or wedding thanksgiving, recovery of health, or special personal needs.
                   </p>
+                  <ol className="mt-6 space-y-3.5 text-[14px]">
+                    {[
+                      'Intentions read at your requested Qurbana date & printed in the parish bulletin.',
+                      'Complimentary commemorative Marian Qurbana Card mailed upon request.',
+                      'Stipends go directly toward parish maintenance & priestly ministries.',
+                    ].map((step, i) => (
+                      <li key={step} className="flex items-start gap-3">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold-500 text-[12px] font-bold text-maroon-950">{i + 1}</span>
+                        <span className="text-ivory-200/90">{step}</span>
+                      </li>
+                    ))}
+                  </ol>
                 </div>
-              ) : (
-                <form className="space-y-3.5" onSubmit={handleBookingSubmit}>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block font-label-sm text-xs uppercase tracking-wider text-[#3e484d] mb-1 font-semibold">
-                        Intention For (Name) *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={intentName}
-                        onChange={(e) => setIntentName(e.target.value)}
-                        placeholder="e.g. Maria Teresa &amp; Joseph"
-                        className="w-full bg-[#ffffff] px-3.5 py-2.5 rounded-xl font-body-sm text-xs sm:text-sm text-[#071e28] focus:outline-none focus:ring-2 focus:ring-[#67c7e8] border border-[#dbf1ff]"
-                      />
+                <div className="bg-ivory-100 p-6 sm:p-8 lg:col-span-7">
+                  <h3 className="font-serif text-[1.25rem] font-semibold text-ink-950">Request Qurbana Intention Online</h3>
+                  {bookingSuccess ? (
+                    <div className="mt-4 rounded-2xl border border-line bg-white p-8 text-center" role="status">
+                      <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-maroon-600/10 text-maroon-700">
+                        <span className="material-symbols-outlined text-3xl">check_circle</span>
+                      </span>
+                      <h4 className="mt-3 text-[16px] font-bold text-maroon-700">Intention Submitted to the Parish Office</h4>
+                      <p className="t-small mx-auto mt-1.5 max-w-sm">
+                        Our sacristan will record your intention for {intentDate || 'the next scheduled Holy Qurbana'} and send your confirmation email.
+                      </p>
                     </div>
-                    <div>
-                      <label className="block font-label-sm text-xs uppercase tracking-wider text-[#3e484d] mb-1 font-semibold">
-                        Intention Nature
-                      </label>
-                      <select
-                        value={intentNature}
-                        onChange={(e) => setIntentNature(e.target.value)}
-                        className="w-full bg-[#ffffff] px-3.5 py-2.5 rounded-xl font-body-sm text-xs sm:text-sm text-[#071e28] focus:outline-none focus:ring-2 focus:ring-[#67c7e8] border border-[#dbf1ff]"
-                      >
-                        <option>Repose of the Soul (Departed)</option>
-                        <option>Thanksgiving / Anniversaries</option>
-                        <option>Good Health &amp; Healing</option>
-                        <option>Special Intention / Petition</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block font-label-sm text-xs uppercase tracking-wider text-[#3e484d] mb-1 font-semibold">
-                        Preferred Liturgy Date *
-                      </label>
-                      <input
-                        type="date"
-                        required
-                        value={intentDate}
-                        onChange={(e) => setIntentDate(e.target.value)}
-                        className="w-full bg-[#ffffff] px-3.5 py-2.5 rounded-xl font-body-sm text-xs sm:text-sm text-[#071e28] focus:outline-none focus:ring-2 focus:ring-[#67c7e8] border border-[#dbf1ff]"
-                      />
-                    </div>
-                    <div>
-                      <label className="block font-label-sm text-xs uppercase tracking-wider text-[#3e484d] mb-1 font-semibold">
-                        Preferred Mass Time
-                      </label>
-                      <select
-                        value={intentTime}
-                        onChange={(e) => setIntentTime(e.target.value)}
-                        className="w-full bg-[#ffffff] px-3.5 py-2.5 rounded-xl font-body-sm text-xs sm:text-sm text-[#071e28] focus:outline-none focus:ring-2 focus:ring-[#67c7e8] border border-[#dbf1ff]"
-                      >
-                        <option>06:30 AM Daily Morning Mass</option>
-                        <option>10:00 AM Saturday Healing Mass</option>
-                        <option>06:00 PM Daily Evening Mass</option>
-                        <option>08:00 AM Sunday Choral High Mass</option>
-                        <option>Next Available Daily Mass</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block font-label-sm text-xs uppercase tracking-wider text-[#3e484d] mb-1 font-semibold">
-                      Offered By (Your Contact &amp; Email) *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={offeredBy}
-                      onChange={(e) => setOfferedBy(e.target.value)}
-                      placeholder="Your full name and email for confirmation"
-                      className="w-full bg-[#ffffff] px-3.5 py-2.5 rounded-xl font-body-sm text-xs sm:text-sm text-[#071e28] focus:outline-none focus:ring-2 focus:ring-[#67c7e8] border border-[#dbf1ff]"
-                    />
-                  </div>
-
-                  <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3">
-                    <div className="text-[#3e484d] font-body-sm text-xs">
-                      Customary Stipend: <strong>$10 - $25 (Voluntary)</strong>
-                    </div>
-                    <button
-                      type="submit"
-                      className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#006780] hover:bg-[#006687] text-white font-label-md text-xs font-semibold shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
-                    >
-                      <span className="material-symbols-outlined text-base">send</span>
-                      <span>Submit Intention Request</span>
-                    </button>
-                  </div>
-                </form>
-              )}
+                  ) : (
+                    <form className="mt-5 space-y-4" onSubmit={handleBookingSubmit}>
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div>
+                          <label className="label" htmlFor="intent-name">Intention For (Name) *</label>
+                          <input id="intent-name" type="text" required value={intentName} onChange={(e) => setIntentName(e.target.value)} placeholder="e.g. Mariamma & Joseph" className="input !bg-white" />
+                        </div>
+                        <div>
+                          <label className="label" htmlFor="intent-nature">Intention Nature</label>
+                          <select id="intent-nature" value={intentNature} onChange={(e) => setIntentNature(e.target.value)} className="input !bg-white">
+                            <option>Repose of the Soul (Departed)</option>
+                            <option>Thanksgiving / Anniversaries</option>
+                            <option>Good Health &amp; Healing</option>
+                            <option>Special Intention / Petition</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div>
+                          <label className="label" htmlFor="intent-date">Preferred Liturgy Date *</label>
+                          <input id="intent-date" type="date" required value={intentDate} onChange={(e) => setIntentDate(e.target.value)} className="input !bg-white" />
+                        </div>
+                        <div>
+                          <label className="label" htmlFor="intent-time">Preferred Qurbana Time</label>
+                          <select id="intent-time" value={intentTime} onChange={(e) => setIntentTime(e.target.value)} className="input !bg-white">
+                            <option>06:30 AM Daily Holy Qurbana</option>
+                            <option>06:30 AM Saturday Holy Qurbana</option>
+                            <option>05:30 PM Saturday Vigil Qurbana</option>
+                            <option>07:00 AM Sunday Holy Qurbana</option>
+                            <option>09:30 AM Sunday Solemn Holy Qurbana</option>
+                            <option>Next Available Holy Qurbana</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="label" htmlFor="intent-offered-by">Offered By (Your Contact &amp; Email) *</label>
+                        <input id="intent-offered-by" type="text" required value={offeredBy} onChange={(e) => setOfferedBy(e.target.value)} placeholder="Your full name and email for confirmation" className="input !bg-white" />
+                      </div>
+                      <div className="flex flex-col items-start justify-between gap-3 pt-1 sm:flex-row sm:items-center">
+                        <p className="text-[13px] text-ink-500">Customary Stipend: <strong className="text-ink-900">₹100 – ₹500 (Voluntary)</strong></p>
+                        <button type="submit" className="btn-primary w-full sm:w-auto">
+                          <span className="material-symbols-outlined text-[20px]">send</span>
+                          Submit Intention Request
+                        </button>
+                      </div>
+                    </form>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </div>
