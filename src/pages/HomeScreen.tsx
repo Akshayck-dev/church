@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { NavigationTab } from '../types';
 import { IMAGES } from '../data/parishData';
-
+import desktopBg from '../assets/desktop.png';
+import mobBg from '../assets/mob.png';
 interface HomeScreenProps {
   onNavigate: (tab: NavigationTab) => void;
   onOpenPrayerModal: () => void;
@@ -39,116 +40,66 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigate, onOpenPrayer
       {/* ============================================================ */}
       {/* 1. HERO SECTION: Luminous Sanctuary & Marian Welcome        */}
       {/* ============================================================ */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#e8f6ff] via-[#f4faff] to-[#ffffff] py-10 lg:py-20">
-        {/* Ethereal Marian Aura Background Gradients */}
-        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-[#67c7e8]/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute top-1/3 -right-24 w-96 h-96 bg-[#ffdf98]/30 rounded-full blur-3xl pointer-events-none"></div>
+      <section className="relative w-full min-h-screen overflow-hidden">
+        {/* Full Image (Stretched to Fit) */}
+        <div className="absolute inset-0 z-0">
+          <picture>
+            <source media="(min-width: 1024px)" srcSet={desktopBg} />
+            <img
+              className="w-full h-full object-fill"
+              alt="Lourde Matha Church Sanctuary"
+              src={mobBg}
+            />
+          </picture>
+          {/* Dark Overlay for Text Legibility */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#001a24]/70 via-[#003144]/50 to-[#001a24]/90 pointer-events-none"></div>
+        </div>
+        
+        {/* Content Overlaid */}
+        <div className="relative z-10 w-full h-full min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-12">
+          <div className="w-full max-w-[1280px] mx-auto flex flex-col items-center">
+            {/* Removed Sacred Eyebrow Tag */}
 
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
-            {/* Left: Refined Marian Liturgical Content */}
-            <div className="lg:col-span-7 flex flex-col items-start space-y-4">
-              {/* Sacred Eyebrow Tag */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#dbf1ff] text-[#006780] font-label-md text-xs uppercase tracking-widest shadow-2xs">
-                <span className="text-[#745b1b] font-serif text-sm">†</span>
-                <span>Welcome to Lourde Matha Church, Thalayanadu</span>
-              </div>
+          {/* Main Serif Headline */}
+          <h1 className="font-display-lg text-5xl sm:text-6xl lg:text-[72px] text-white tracking-tight leading-tight mb-6">
+            Embrace the <span className="text-[#ffdf98] italic font-normal">Sacred</span>, <br className="hidden sm:inline" />
+            Find Your Peace
+          </h1>
 
-              {/* Main Serif Headline */}
-              <h1 className="font-display-lg text-4xl sm:text-5xl lg:text-[54px] text-[#071e28] tracking-tight leading-tight">
-                A Place of <span className="text-[#006687] italic font-normal">Prayer</span>, <br className="hidden sm:inline" />
-                Hope &amp; Grace
-              </h1>
-
-              {/* Delicate Sky Blue Decorative Flourish */}
-              <div className="flex items-center gap-3 w-full max-w-sm py-1">
-                <div className="h-[2px] flex-1 bg-gradient-to-r from-[#67c7e8] to-transparent rounded-full"></div>
-                <span className="material-symbols-outlined text-[#745b1b] text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
-                  star
-                </span>
-                <div className="h-[2px] flex-1 bg-gradient-to-l from-[#67c7e8] to-transparent rounded-full"></div>
-              </div>
-
-              {/* Subtitle */}
-              <p className="font-body-lg text-base sm:text-lg text-[#3e484d] max-w-xl leading-relaxed">
-                Gather in sacred adoration under the gentle protective mantle of Our Lady of Grace. Find stillness, healing peace, and spiritual renewal in the communion of Christ.
-              </p>
-
-              {/* Liturgical Notice Pill */}
-              <div className="flex items-center gap-3 p-3 px-4 rounded-xl bg-[#d5ecfa]/60 backdrop-blur-sm text-[#006687] font-body-sm text-xs sm:text-sm">
-                <span className="material-symbols-outlined text-[#006780] text-lg">calendar_month</span>
-                <span>
-                  Liturgical Season: <strong className="font-semibold text-[#071e28]">Ordinary Time • Marian Year of Hope</strong>
-                </span>
-              </div>
-
-              {/* CTAs */}
-              <div className="flex flex-wrap items-center gap-3 pt-2 w-full sm:w-auto">
-                <button
-                  onClick={() => onNavigate('mass-timings')}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#67c7e8] hover:bg-[#006687] text-[#005266] hover:text-white rounded-xl font-label-md text-sm font-semibold transition-all shadow-[0_4px_16px_-2px_rgba(103,199,232,0.45)] cursor-pointer"
-                >
-                  <span className="material-symbols-outlined text-lg">schedule</span>
-                  <span>Explore Mass Timings</span>
-                </button>
-                <button
-                  onClick={onOpenPrayerModal}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#ffffff] hover:bg-[#dbf1ff] text-[#006687] rounded-xl font-label-md text-sm font-semibold transition-all shadow-sm border border-[#dbf1ff] cursor-pointer"
-                >
-                  <span className="material-symbols-outlined text-[#745b1b] text-lg">edit_note</span>
-                  <span>Submit Prayer Petition</span>
-                </button>
-              </div>
-
-              {/* Quick Live Stats Bar */}
-              <div className="pt-2 grid grid-cols-3 gap-3 w-full max-w-lg">
-                <div className="bg-[#ffffff]/80 backdrop-blur p-3 rounded-xl shadow-xs text-center border border-[#dbf1ff]">
-                  <span className="font-headline-sm text-lg sm:text-xl text-[#006780] block font-semibold">6 Daily</span>
-                  <span className="font-label-sm text-[10px] sm:text-xs text-[#3e484d] uppercase tracking-wider">Liturgies</span>
-                </div>
-                <div className="bg-[#ffffff]/80 backdrop-blur p-3 rounded-xl shadow-xs text-center border border-[#dbf1ff]">
-                  <span className="font-headline-sm text-lg sm:text-xl text-[#745b1b] block font-semibold">120 Yrs</span>
-                  <span className="font-label-sm text-[10px] sm:text-xs text-[#3e484d] uppercase tracking-wider">Sanctuary</span>
-                </div>
-                <div className="bg-[#ffffff]/80 backdrop-blur p-3 rounded-xl shadow-xs text-center border border-[#dbf1ff]">
-                  <span className="font-headline-sm text-lg sm:text-xl text-[#006687] block font-semibold">10,000+</span>
-                  <span className="font-label-sm text-[10px] sm:text-xs text-[#3e484d] uppercase tracking-wider">Pilgrims</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Shrine Sanctuary Visual Frame */}
-            <div className="lg:col-span-5 relative mt-6 lg:mt-0">
-              <div className="relative mx-auto max-w-md lg:max-w-none rounded-2xl overflow-hidden shadow-2xl bg-[#ffffff] p-2.5 border border-[#dbf1ff]">
-                <div className="relative rounded-xl overflow-hidden aspect-[4/5] bg-[#c7ddeb]">
-                  <img
-                    className="w-full h-full object-cover"
-                    alt="Sancta Maria Marian Shrine Altar with Our Lady of Grace"
-                    src={IMAGES.shrineAltarHero}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#006687]/80 via-transparent to-[#67c7e8]/20"></div>
-
-                  {/* Bottom Overlaid Scripture Quote */}
-                  <div className="absolute bottom-0 inset-x-0 p-5 text-white">
-                    <div className="flex items-center gap-1.5 text-[#ffdf98] text-xs font-semibold mb-1">
-                      <span className="material-symbols-outlined text-base">church</span>
-                      <span>SANCTUARY OF OUR LADY OF GRACE</span>
-                    </div>
-                    <p className="font-headline-sm text-lg sm:text-xl italic leading-snug">
-                      “Do whatever He tells you.”
-                    </p>
-                    <span className="font-label-sm text-xs text-[#c1e8ff] block mt-1">John 2:5</span>
-                  </div>
-                </div>
-
-                {/* Floating Badge: Perpetual Shrine */}
-                <div className="absolute -top-3 -left-3 bg-[#ffffff] text-[#006687] px-3.5 py-2 rounded-xl shadow-lg flex items-center gap-2 border border-[#dbf1ff]">
-                  <span className="material-symbols-outlined text-[#745b1b] text-xl">verified</span>
-                  <span className="font-label-md text-xs font-semibold">Diocesan Marian Shrine</span>
-                </div>
-              </div>
-            </div>
+          {/* Delicate Decorative Flourish */}
+          <div className="flex items-center gap-3 w-full max-w-sm py-2 mb-6">
+            <div className="h-[2px] flex-1 bg-gradient-to-r from-white/50 to-transparent rounded-full"></div>
+            <span className="material-symbols-outlined text-[#ffdf98] text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+              star
+            </span>
+            <div className="h-[2px] flex-1 bg-gradient-to-l from-white/50 to-transparent rounded-full"></div>
           </div>
+
+          {/* Subtitle */}
+          <p className="font-body-lg text-lg sm:text-xl text-white/90 max-w-2xl leading-relaxed mb-10">
+            Step into the radiant sanctuary of Lourde Matha Church. Experience a community of unwavering faith, divine worship, and the enduring grace of our Lord.
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto mb-16">
+            <button
+              onClick={() => onNavigate('mass-timings')}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#67c7e8] hover:bg-[#ffdf98] text-[#005266] hover:text-[#745b1b] rounded-xl font-label-md text-sm font-bold transition-all shadow-lg cursor-pointer"
+            >
+              <span className="material-symbols-outlined text-xl">schedule</span>
+              <span>Explore Mass Timings</span>
+            </button>
+            <button
+              onClick={onOpenPrayerModal}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-xl font-label-md text-sm font-bold transition-all shadow-lg border border-white/30 cursor-pointer"
+            >
+              <span className="material-symbols-outlined text-[#ffdf98] text-xl">edit_note</span>
+              <span>Submit Prayer Petition</span>
+            </button>
+          </div>
+
+          {/* Stats Bar Removed */}
+        </div>
         </div>
       </section>
 

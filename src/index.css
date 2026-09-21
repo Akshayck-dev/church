@@ -206,3 +206,5 @@
   letter-spacing: 0.06em;
   font-weight: 600;
 }
+
+@keyframes slowZoom { 0% { transform: scale(1); } 100% { transform: scale(1.15); } } .animate-slow-zoom { animation: slowZoom 20s ease-in-out infinite alternate; }

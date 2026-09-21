@@ -1,5 +1,7 @@
 export type NavigationTab = 
   | 'home' 
+  | 'about'
+  | 'contact'
   | 'mass-timings' 
   | 'devotions-shrine' 
   | 'sacraments' 

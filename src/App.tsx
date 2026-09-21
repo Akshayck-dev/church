@@ -15,6 +15,8 @@ import { NewsEventsScreen } from './pages/NewsEventsScreen';
 import { LiveMassScreen } from './pages/LiveMassScreen';
 import { VicarParishScreen } from './pages/VicarParishScreen';
 import { OfferingsScreen } from './pages/OfferingsScreen';
+import { AboutScreen } from './pages/AboutScreen';
+import { ContactScreen } from './pages/ContactScreen';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<NavigationTab>('home');
@@ -37,12 +39,20 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 w-full flex flex-col pt-20">
+      <main className={`flex-1 w-full flex flex-col ${activeTab === 'home' ? '' : 'pt-28'}`}>
         {activeTab === 'home' && (
           <HomeScreen
             onNavigate={(tab: NavigationTab) => setActiveTab(tab)}
             onOpenPrayerModal={() => setIsPrayerModalOpen(true)}
           />
+        )}
+
+        {activeTab === 'about' && (
+          <AboutScreen />
+        )}
+
+        {activeTab === 'contact' && (
+          <ContactScreen />
         )}
 
         {activeTab === 'mass-timings' && (
