@@ -41,7 +41,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenPrayerModal })
                 <span className="mt-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-gold-300">
                   Thalayanadu • Est. 1935
                 </span>
-                </span>
               </div>
             </div>
             <p className="serif-italic text-[1.05rem] leading-relaxed text-gold-200">
